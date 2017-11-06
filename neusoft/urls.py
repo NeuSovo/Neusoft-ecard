@@ -17,9 +17,10 @@ from django.conf.urls import url
 from django.contrib import admin
 from ecard.views import *
 urlpatterns = [
+    url(r'^$',index),
     url(r'^admin/', admin.site.urls),
-    url(r'^check$',firstrun),
-    url(r'^bind$',Bind),
-    url(r'^balance$',getBalance),
-    url(r'^detail$',getDetail),
+    url(r'^check$', check),
+    url(r'^bind$', Bind),
+    url(r'^balance$', getBalance),
+    url(r'^detail$', getDetail),
 ]

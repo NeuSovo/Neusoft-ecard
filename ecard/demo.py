@@ -44,6 +44,6 @@ def getD(key, month=''):
             res['yue'] = tmp[6]
             tmpinfo.append(res)
 
-    result['data'] = tmpinfo
+    result['info'] = tmpinfo
 
     return result

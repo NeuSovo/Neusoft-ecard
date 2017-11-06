@@ -1,9 +1,10 @@
 import os
 import requests
-from hashlib import md5,sha256
+from hashlib import md5, sha256
 
 Appid = 'wx5c7d55175f3872b7'
 SECRET = '18e18b264801eb53c9fe7634504f2f15'
+
 
 def getOpenid(code):
     s = requests.Session()
@@ -17,7 +18,6 @@ def getOpenid(code):
 
     return data.json()
 
-def gen3rdkey(count = 24):
-	return sha256(os.urandom(count)).hexdigest()
-for i in range(10000):
-    print (gen3rdkey())
+
+def gen3rdkey(count=24):
+    return sha256(os.urandom(count)).hexdigest()

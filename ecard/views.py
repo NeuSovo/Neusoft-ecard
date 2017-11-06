@@ -8,19 +8,30 @@ import json
 #
 # code : 10000 -> 绑定用户成功，没有绑卡
 #        10001 -> 已绑定此用户，但没有绑卡
+#        10002 -> Session 更新成功
+#        10003 -> Session 不可用 需要执行recheck
+#        10004 -> 绑卡的时候，卡片已有人绑定
+#        10005 -> 绑卡成功
+#        10006 -> 获取余额成功
+#        10007 -> 获取余额失败,可能卡片失效,需要重新绑定
+#        10008 -> 获取信息成功
+#
 #
 #
 
+def index(request):
+    return HttpResponse('It worked!')
 
-def firstrun(request):
+
+def check(request):
     code = request.GET['code']
-    data = getOpenid(code)
-    have_user = Ecard.objects.filter(wechat_key=data['openid'])
-    # data = {'openid':'1','session_key':'2'}
-    # have_user = ''
+    # data = getOpenid(code)
+    # have_user = Ecard.objects.filter(wechat_key=data['openid'])
+    data = {'openid':'1','session_key':'2'}
+    have_user = ''
     if len(have_user) != 0:
         return HttpResponse(json.dumps({'code': '10001',
-                                        'message': 'The id is exist'}),
+                                        'message': 'failed'}),
                             content_type="application/json")
     else:
         rdkey = gen3rdkey()
@@ -41,18 +52,37 @@ def firstrun(request):
         return response
 
 
+def recheck(request):
+    code = request.GET['code']
+    data = getOpenid(code)
+    open_id = data['openid']
+    this_user = Sessions.objects.get(open_id=open_id)
+    rdkey = gen3rdkey()
+    this_user.rd_session = rdkey
+    this_user.save()
+
+    response = HttpResponse(json.dumps({'code': '10002',
+                                        'message': 'Success'}),
+                            content_type="application/json")
+
+    response.set_cookie('3rdkey', rdkey)
+
+    return response
+
+
+
 def Bind(request):
     ek = request.GET['ek']
     sess = request.COOKIES['3rdkey']
     this_user = Sessions.objects.filter(rd_session=sess)
     if len(this_user) == 0:
         return HttpResponse(json.dumps({'code': '10003',
-                                        'message': 'The Sessions not work'}),
+                                        'message': 'failed'}),
                             content_type="application/json")
 
     if len(Ecard.objects.filter(ecard_key=ek)) != 0:
         return HttpResponse(json.dumps({'code': '10004',
-                                        'message': 'The ecard_key is exist'}),
+                                        'message': 'failed'}),
                             content_type="application/json")
 
     this_user = Sessions.objects.get(rd_session=sess)
@@ -70,21 +100,38 @@ def Bind(request):
 
 def getBalance(request):
     sess = request.COOKIES['3rdkey']
+    data = {}
+    this_user = Sessions.objects.filter(rd_session=sess)
+    if len(this_user) == 0:
+        return HttpResponse(json.dumps({'code': '10003',
+                                        'message': 'failed'}),
+                            content_type="application/json")
+
     this_user = Sessions.objects.get(rd_session=sess)
     this_ek = Ecard.objects.get(wechat_key=this_user.open_id)
 
-    data = getB(this_ek.ecard_key)
-    print(len(data))
-    data['code'] = 'Success'
+    data['info'] = getB(this_ek.ecard_key)
+    if data:
+        data['code'] = '10006'
+        data['message'] = 'Success'
+    else:
+        data['code'] = '10007'
+        data['message'] = 'failed'
 
     response = HttpResponse(json.dumps(data),
-                            content_type="application/json")
-
+                                content_type="application/json")
     return response
 
 
 def getDetail(request):
     sess = request.COOKIES['3rdkey']
+
+    this_user = Sessions.objects.filter(rd_session=sess)
+    if len(this_user) == 0:
+        return HttpResponse(json.dumps({'code': '10003',
+                                        'message': 'failed'}),
+                            content_type="application/json")
+
     this_user = Sessions.objects.get(rd_session=sess)
     this_ek = Ecard.objects.get(wechat_key=this_user.open_id)
 
@@ -94,9 +141,13 @@ def getDetail(request):
         month = ''
 
     data = getD(this_ek.ecard_key, month)
-    data['code'] = 'Success'
+    if data:
+        data['code'] = '10008'
+
+    else:
+        data['code'] = '10009'
 
     response = HttpResponse(json.dumps(data),
-                            content_type="application/json")
+                             content_type="application/json")
 
     return response
