@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^$',index),
     url(r'^admin/', admin.site.urls),
     url(r'^check$', check),
+    url(r'recheck$',recheck),
     url(r'^bind$', Bind),
     url(r'^balance$', getBalance),
     url(r'^detail$', getDetail),

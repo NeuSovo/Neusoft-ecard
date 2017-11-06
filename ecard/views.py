@@ -27,8 +27,13 @@ def index(request):
 def check(request):
     code = request.GET['code']
     # data = getOpenid(code)
+    # if 'openid' not in data:
+    #     return HttpResponse(json.dumps({'code': '99999',
+    #                                     'message': 'failed'}),
+    #                         content_type="application/json")
+
     # have_user = Ecard.objects.filter(wechat_key=data['openid'])
-    data = {'openid':'2','session_key':'2'}
+    data={'openid':code,'session_key':code}
     have_user = ''
     if len(have_user) != 0:
         return HttpResponse(json.dumps({'code': '10001',
@@ -48,14 +53,25 @@ def check(request):
                                             'message': 'Success'}),
                                 content_type="application/json")
 
-        response.set_cookie('3rdkey', rdkey)
+        response['rdkey'] = rdkey
 
         return response
 
 
 def recheck(request):
+    if 'code' not in request.GET:
+        return HttpResponse(json.dumps({'code': '99999',
+                                        'message': 'failed'}),
+                            content_type="application/json")
+
     code = request.GET['code']
+
     data = getOpenid(code)
+    if 'openid' not in data:
+        return HttpResponse(json.dumps({'code': '99999',
+                                        'message': 'failed'}),
+                            content_type="application/json")
+
     open_id = data['openid']
     this_user = Sessions.objects.get(open_id=open_id)
     rdkey = gen3rdkey()
@@ -66,26 +82,34 @@ def recheck(request):
                                         'message': 'Success'}),
                             content_type="application/json")
 
-    response.set_cookie('3rdkey', rdkey)
+    response['rdkey'] = rdkey
 
     return response
 
 
 
 def Bind(request):
+    if 'ek' not in request.GET:
+        return HttpResponse(json.dumps({'code': '99999',
+                                        'message': 'failed'}),
+                            content_type="application/json")
+
     ek = request.GET['ek']
+
     try:
-        sess = request.COOKIES['3rdkey']
+        sess = request.COOKIES['rdkey']
     except:
         return HttpResponse(json.dumps({'code': '10003',
                                         'message': 'failed'}),
                             content_type="application/json")
 
     this_user = Sessions.objects.filter(rd_session=sess)
+
     if len(this_user) == 0:
         return HttpResponse(json.dumps({'code': '10003',
                                         'message': 'failed'}),
                             content_type="application/json")
+
 
     if len(Ecard.objects.filter(ecard_key=ek)) != 0:
         return HttpResponse(json.dumps({'code': '10004',
@@ -107,7 +131,7 @@ def Bind(request):
 
 def getBalance(request):
     try:
-       sess = request.COOKIES['3rdkey']
+        sess = request.COOKIES['rdkey']
     except:
         sess = 'null'
 
@@ -136,7 +160,7 @@ def getBalance(request):
 
 def getDetail(request):
     try:
-       sess = request.COOKIES['3rdkey']
+        sess = request.COOKIES['rdkey']
     except:
         sess = 'null'
 

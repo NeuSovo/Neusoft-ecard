@@ -9,7 +9,7 @@ info = 'https://ecard.neusoft.edu.cn/zh-hans/user/me'
 
 def getB(key):
     s = requests.Session()
-    s.get(ecardurl + key, timeout=4)
+    s.get(key, timeout=4)
     data = s.get(Balance, timeout=4)
     soup = BeautifulSoup(data.text, 'lxml')
     Tmp = soup.select('div.container p')[0].text.split()
@@ -24,7 +24,7 @@ def getB(key):
 
 def getD(key, month=''):
     s = requests.Session()
-    s.get(ecardurl + key, timeout=4)
+    s.get(key, timeout=4)
     data = s.get(detail + str(month), timeout=4)
     soup = BeautifulSoup(data.text, 'lxml')
     Alldetail = soup.select('tr')
