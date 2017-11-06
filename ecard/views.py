@@ -28,7 +28,7 @@ def check(request):
     code = request.GET['code']
     # data = getOpenid(code)
     # have_user = Ecard.objects.filter(wechat_key=data['openid'])
-    data = {'openid':'1','session_key':'2'}
+    data = {'openid':'2','session_key':'2'}
     have_user = ''
     if len(have_user) != 0:
         return HttpResponse(json.dumps({'code': '10001',
@@ -74,7 +74,13 @@ def recheck(request):
 
 def Bind(request):
     ek = request.GET['ek']
-    sess = request.COOKIES['3rdkey']
+    try:
+        sess = request.COOKIES['3rdkey']
+    except:
+        return HttpResponse(json.dumps({'code': '10003',
+                                        'message': 'failed'}),
+                            content_type="application/json")
+
     this_user = Sessions.objects.filter(rd_session=sess)
     if len(this_user) == 0:
         return HttpResponse(json.dumps({'code': '10003',
@@ -100,7 +106,11 @@ def Bind(request):
 
 
 def getBalance(request):
-    sess = request.COOKIES['3rdkey']
+    try:
+       sess = request.COOKIES['3rdkey']
+    except:
+        sess = 'null'
+
     data = {}
     this_user = Sessions.objects.filter(rd_session=sess)
     if len(this_user) == 0:
@@ -125,7 +135,10 @@ def getBalance(request):
 
 
 def getDetail(request):
-    sess = request.COOKIES['3rdkey']
+    try:
+       sess = request.COOKIES['3rdkey']
+    except:
+        sess = 'null'
 
     this_user = Sessions.objects.filter(rd_session=sess)
     if len(this_user) == 0:

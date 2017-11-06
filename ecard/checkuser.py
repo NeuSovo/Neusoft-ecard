@@ -21,4 +21,5 @@ def getOpenid(code):
 
 
 def gen3rdkey(count=24):
-    return sha256(os.urandom(count)).hexdigest()
+    return (sha256(os.urandom(count)).hexdigest())
+
