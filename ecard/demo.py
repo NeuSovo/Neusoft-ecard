@@ -11,7 +11,7 @@ def getB(key):
     s = requests.Session()
     s.get(ecardurl + key, timeout=4)
     data = s.get(Balance, timeout=4)
-    soup = BeautifulSoup(data.text, 'html.parser')
+    soup = BeautifulSoup(data.text, 'lxml')
     Tmp = soup.select('div.container p')[0].text.split()
     res = {}
 
