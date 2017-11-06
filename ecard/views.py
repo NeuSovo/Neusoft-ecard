@@ -1,3 +1,4 @@
+# coding:utf-8
 from django.shortcuts import render, HttpResponse
 # Create your views here.
 from .models import Ecard, Sessions
