@@ -20,21 +20,29 @@ import json
 #
 #
 
+
 def index(request):
     return HttpResponse('It worked!')
 
 
 def check(request):
-    code = request.GET['code']
-    # data = getOpenid(code)
-    # if 'openid' not in data:
-    #     return HttpResponse(json.dumps({'code': '99999',
-    #                                     'message': 'failed'}),
-    #                         content_type="application/json")
+    try:
+        code = request.GET['code']
+    except:
+        return HttpResponse(json.dumps({'code': '99999',
+                                        'message': 'failed'}),
+                            content_type="application/json")
+    data = getOpenid(code)
+    if 'openid' not in data:
+        return HttpResponse(json.dumps({'code': '99999',
+                                        'message': 'failed'}),
+                            content_type="application/json")
 
-    # have_user = Ecard.objects.filter(wechat_key=data['openid'])
-    data={'openid':code,'session_key':code}
-    have_user = ''
+    have_user = Ecard.objects.filter(wechat_key=data['openid'])
+
+    # data = {'openid': code, 'session_key': code}
+    # have_user = ''
+
     if len(have_user) != 0:
         return HttpResponse(json.dumps({'code': '10001',
                                         'message': 'failed'}),
@@ -52,7 +60,7 @@ def check(request):
         response = HttpResponse(json.dumps({'code': '10000',
                                             'message': 'Success'}),
                                 content_type="application/json")
-
+        response.set_cookie('rdkey',rdkey)
         response['rdkey'] = rdkey
 
         return response
@@ -87,7 +95,6 @@ def recheck(request):
     return response
 
 
-
 def Bind(request):
     if 'ek' not in request.GET:
         return HttpResponse(json.dumps({'code': '99999',
@@ -109,7 +116,6 @@ def Bind(request):
         return HttpResponse(json.dumps({'code': '10003',
                                         'message': 'failed'}),
                             content_type="application/json")
-
 
     if len(Ecard.objects.filter(ecard_key=ek)) != 0:
         return HttpResponse(json.dumps({'code': '10004',
@@ -145,6 +151,11 @@ def getBalance(request):
     this_user = Sessions.objects.get(rd_session=sess)
     this_ek = Ecard.objects.get(wechat_key=this_user.open_id)
 
+    if this_ek.ecard_key == 'NULL':
+        return HttpResponse(json.dumps({'code': '10001',
+                                        'message': 'failed'}),
+                            content_type="application/json")
+
     data['info'] = getB(this_ek.ecard_key)
     if data:
         data['code'] = '10006'
@@ -154,7 +165,7 @@ def getBalance(request):
         data['message'] = 'failed'
 
     response = HttpResponse(json.dumps(data),
-                                content_type="application/json")
+                            content_type="application/json")
     return response
 
 
@@ -178,14 +189,21 @@ def getDetail(request):
     else:
         month = ''
 
+    if this_ek.ecard_key == 'NULL':
+        return HttpResponse(json.dumps({'code': '10001',
+                                        'message': 'failed'}),
+                            content_type="application/json")
+
     data = getD(this_ek.ecard_key, month)
     if data:
         data['code'] = '10008'
+        data['message'] = 'Success'
 
     else:
         data['code'] = '10009'
+        data['message'] = 'Success'
 
     response = HttpResponse(json.dumps(data),
-                             content_type="application/json")
+                            content_type="application/json")
 
     return response
