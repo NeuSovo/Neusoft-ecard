@@ -25,6 +25,42 @@ SECRET_KEY = '6c($_fxr%f@$+p(30oc3tmp)n7jgymn%_r$x*miw5gl8kc%5zm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# logging tem
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console':{
+            'level':'INFO',
+            'class':'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '/data/logs/request.log',
+            'formatter': 'verbose'
+        },
+        'email': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html' : True,
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file', 'email'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
+
 ALLOWED_HOSTS = ['*']
 
 
@@ -79,8 +115,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'neusoft',
         'USER': 'root',
-        'PASSWORD': '19970326.',
-        'HOST': '123.206.19.145',
+        'PASSWORD': '.',
+        'HOST': '.',
         'PORT': '3306',
     }
 }

@@ -5,6 +5,9 @@ from .models import Ecard, Sessions
 from .demo import getB, getD
 from .checkuser import getOpenid, gen3rdkey
 import json
+import logging
+
+logger = logging.getLogger('django')
 
 def index(request):
     return HttpResponse('It worked!')
@@ -13,12 +16,14 @@ def index(request):
 def check(request):
     try:
         code = request.GET['code']
+        logger.info('Try no code to check')
     except:
         return HttpResponse(json.dumps({'code': '99999',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
     data = getOpenid(code)
     if 'openid' not in data:
+        logger.warn('{} is doesn\'t work'.format(code))
         return HttpResponse(json.dumps({'code': '99999',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
@@ -48,6 +53,7 @@ def check(request):
         response.set_cookie('rdkey',rdkey)
         response['rdkey'] = rdkey
 
+        logger.info('{} is work'.format(wechat_key))
         return response
 
 
@@ -60,7 +66,9 @@ def recheck(request):
     code = request.GET['code']
     data = {}
     data = getOpenid(code)
+
     if code =='debug':
+        logger.info('debug is run')
         data['openid'] = 'test'
     if 'openid' not in data:
         return HttpResponse(json.dumps({'code': '99999',
@@ -78,7 +86,7 @@ def recheck(request):
                             content_type="application/json")
 
     this_user = Sessions.objects.get(open_id=open_id)
-    print (this_user.open_id)
+    # print (this_user.open_id)
 
     rdkey = gen3rdkey()
     this_user.rd_session = rdkey
@@ -91,6 +99,7 @@ def recheck(request):
     response.set_cookie('rdkey',rdkey)
     response['rdkey'] = rdkey
 
+    logger.info('{} recheck'.format(open_id))
     return response
 
 
@@ -127,6 +136,8 @@ def Bind(request):
 
     this_ek.ecard_key = ek
     this_ek.save()
+
+    logger.warn('{} Success'.format(ek))
     response = HttpResponse(json.dumps({'code': '10005',
                                         'message': 'Success'}, indent=4),
                             content_type="application/json")
@@ -163,6 +174,7 @@ def getBalance(request):
     if data:
         data['code'] = '10006'
         data['message'] = 'Success'
+        logger.info('{} get balance ok'.format(this_ek.ecard_key))
     else:
         data['code'] = '10007'
         data['message'] = 'failed'
@@ -209,4 +221,5 @@ def getDetail(request):
     response = HttpResponse(json.dumps(data, indent=4,ensure_ascii = False),
                             content_type="application/json")
 
+    logger.info('{} get detail ok'.format(this_ek.ecard_key))
     return response
