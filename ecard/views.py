@@ -58,8 +58,10 @@ def recheck(request):
                             content_type="application/json")
 
     code = request.GET['code']
-
+    data = {}
     data = getOpenid(code)
+    if code =='debug':
+        data['openid'] = 'test'
     if 'openid' not in data:
         return HttpResponse(json.dumps({'code': '99999',
                                         'message': 'failed'}, indent=4),
@@ -165,7 +167,7 @@ def getBalance(request):
         data['code'] = '10007'
         data['message'] = 'failed'
 
-    response = HttpResponse(json.dumps(data, indent=4),
+    response = HttpResponse(json.dumps(data, indent=4,ensure_ascii = False),
                             content_type="application/json")
     return response
 
@@ -196,7 +198,7 @@ def getDetail(request):
                             content_type="application/json")
 
     data = getD(this_ek.ecard_key, month)
-    if data:
+    if data['info']:
         data['code'] = '10008'
         data['message'] = 'Success'
 
@@ -204,7 +206,7 @@ def getDetail(request):
         data['code'] = '10009'
         data['message'] = 'Success'
 
-    response = HttpResponse(json.dumps(data, indent=4),
+    response = HttpResponse(json.dumps(data, indent=4,ensure_ascii = False),
                             content_type="application/json")
 
     return response
