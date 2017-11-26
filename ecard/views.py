@@ -16,8 +16,8 @@ def index(request):
 def check(request):
     try:
         code = request.GET['code']
-        logger.info('Try no code to check')
     except:
+        logger.warn('Try no code to check')
         return HttpResponse(json.dumps({'code': '99999',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
@@ -137,7 +137,7 @@ def Bind(request):
     this_ek.ecard_key = ek
     this_ek.save()
 
-    logger.warn('{} Success'.format(ek))
+    logger.info('{} Success'.format(ek))
     response = HttpResponse(json.dumps({'code': '10005',
                                         'message': 'Success'}, indent=4),
                             content_type="application/json")
