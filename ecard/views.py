@@ -17,13 +17,13 @@ def check(request):
     try:
         code = request.GET['code']
     except:
-        logger.warn('Try no code to check')
+        logger.info('No request code')
         return HttpResponse(json.dumps({'code': '99999',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
     data = getOpenid(code)
     if 'openid' not in data:
-        logger.warn('{} is doesn\'t work'.format(code))
+        logger.warn('{} is is wrong'.format(code))
         return HttpResponse(json.dumps({'code': '99999',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
@@ -34,6 +34,7 @@ def check(request):
     # have_user = ''
 
     if len(have_user) != 0:
+        logger.warn('This user {} has been bound'.format(data['openid']))
         return HttpResponse(json.dumps({'code': '10001',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
@@ -53,12 +54,13 @@ def check(request):
         response.set_cookie('rdkey',rdkey)
         response['rdkey'] = rdkey
 
-        logger.info('{} is work'.format(data['openid']))
+        logger.info('{} Bind success'.format(data['openid']))
         return response
 
 
 def recheck(request):
     if 'code' not in request.GET:
+        logger.info('No request code')
         return HttpResponse(json.dumps({'code': '99999',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
@@ -70,7 +72,9 @@ def recheck(request):
     if code =='debug':
         logger.info('debug is run')
         data['openid'] = 'test'
+
     if 'openid' not in data:
+        logger.warn('{} is is wrong'.format(code))
         return HttpResponse(json.dumps({'code': '99999',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
@@ -81,6 +85,7 @@ def recheck(request):
 
     have_user = Sessions.objects.filter(open_id=open_id)
     if len(have_user) == 0:
+        logger.warn('{} Not yet bound'.format(open_id))
         return HttpResponse(json.dumps({'code': '99999',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
@@ -99,12 +104,13 @@ def recheck(request):
     response.set_cookie('rdkey',rdkey)
     response['rdkey'] = rdkey
 
-    logger.info('{} recheck'.format(open_id))
+    logger.info('{} recheck success'.format(open_id))
     return response
 
 
 def Bind(request):
     if 'ek' not in request.GET:
+        logger.info('No request ek')
         return HttpResponse(json.dumps({'code': '99999',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
@@ -114,6 +120,7 @@ def Bind(request):
     try:
         sess = request.COOKIES['rdkey']
     except:
+        logger.warn('{} corresponding session expired or not available'.format(ek))
         return HttpResponse(json.dumps({'code': '10003',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
@@ -121,11 +128,13 @@ def Bind(request):
     this_user = Sessions.objects.filter(rd_session=sess)
 
     if len(this_user) == 0:
+        logger.warn('{} corresponding session expired or not available'.format(ek))
         return HttpResponse(json.dumps({'code': '10003',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
 
     if len(Ecard.objects.filter(ecard_key=ek)) != 0:
+        logger.warn('{} Try the second binding '.format(ek))
         return HttpResponse(json.dumps({'code': '10004',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
@@ -137,7 +146,7 @@ def Bind(request):
     this_ek.ecard_key = ek
     this_ek.save()
 
-    logger.info('{} Success'.format(ek))
+    logger.info('{} bind Success'.format(ek))
     response = HttpResponse(json.dumps({'code': '10005',
                                         'message': 'Success'}, indent=4),
                             content_type="application/json")
@@ -153,13 +162,13 @@ def getBalance(request):
     try:
         sess = request.COOKIES['rdkey']
     except:
-        logger.warn('no get sess ')
+        logger.warn('no request sess ')
         sess = 'null'
 
     data = {}
     this_user = Sessions.objects.filter(rd_session=sess)
     if len(this_user) == 0:
-        logger.warn('no user')
+        logger.warn('Corresponding session expired or not available')
         return HttpResponse(json.dumps({'code': '10003',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
@@ -168,7 +177,7 @@ def getBalance(request):
     this_ek = Ecard.objects.get(wechat_key=this_user.open_id)
 
     if this_ek.ecard_key == 'NULL':
-        logger.warn('{}no Bind ek'.format(this_user.open_id))
+        logger.warn('{} no Bind ek'.format(this_user.open_id))
         return HttpResponse(json.dumps({'code': '10001',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
@@ -191,10 +200,12 @@ def getDetail(request):
     try:
         sess = request.COOKIES['rdkey']
     except:
+        logger.warn('no request sess ')
         sess = 'null'
 
     this_user = Sessions.objects.filter(rd_session=sess)
     if len(this_user) == 0:
+        logger.warn('Corresponding session expired or not available')
         return HttpResponse(json.dumps({'code': '10003',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
@@ -208,6 +219,7 @@ def getDetail(request):
         month = ''
 
     if this_ek.ecard_key == 'NULL':
+        logger.warn('{} no Bind ek'.format(this_ek.wechat_key))
         return HttpResponse(json.dumps({'code': '10001',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
