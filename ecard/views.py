@@ -53,7 +53,7 @@ def check(request):
         response.set_cookie('rdkey',rdkey)
         response['rdkey'] = rdkey
 
-        logger.info('{} is work'.format(wechat_key))
+        logger.info('{} is work'.format(data['openid']))
         return response
 
 
@@ -153,11 +153,13 @@ def getBalance(request):
     try:
         sess = request.COOKIES['rdkey']
     except:
+        logger.warn('no get sess ')
         sess = 'null'
 
     data = {}
     this_user = Sessions.objects.filter(rd_session=sess)
     if len(this_user) == 0:
+        logger.warn('no user')
         return HttpResponse(json.dumps({'code': '10003',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
@@ -166,6 +168,7 @@ def getBalance(request):
     this_ek = Ecard.objects.get(wechat_key=this_user.open_id)
 
     if this_ek.ecard_key == 'NULL':
+        logger.warn('{}no Bind ek'.format(this_user.open_id))
         return HttpResponse(json.dumps({'code': '10001',
                                         'message': 'failed'}, indent=4),
                             content_type="application/json")
