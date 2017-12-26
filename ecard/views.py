@@ -1,4 +1,5 @@
 # coding:utf-8
+from django.template.loader import render_to_string
 from django.shortcuts import render, HttpResponse
 # Create your views here.
 from .models import Ecard, Sessions
@@ -11,6 +12,9 @@ logger = logging.getLogger('django')
 
 def index(request):
     return HttpResponse('It worked!')
+
+def help_info(request):
+    return render(request,'info.html')
 
 
 def check(request):
@@ -101,7 +105,7 @@ def recheck(request):
                                         'message': 'Success'}, indent=4),
                             content_type="application/json")
 
-    response.set_cookie('rdkey',rdkey)
+    response.set_cookie('rdkey',rdkey,3600)
     response['rdkey'] = rdkey
 
     logger.info('{} recheck success'.format(open_id))

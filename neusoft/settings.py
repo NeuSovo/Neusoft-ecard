@@ -43,7 +43,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/data/logs/request.log',
+            'filename': 'request.log',
             'formatter': 'verbose'
         },
         'email': {
@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ecard',
+    'course'
 ]
 
 MIDDLEWARE = [
@@ -91,7 +92,7 @@ ROOT_URLCONF = 'neusoft.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,8 +116,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'neusoft',
         'USER': 'root',
-        'PASSWORD': '.',
-        'HOST': '.',
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
