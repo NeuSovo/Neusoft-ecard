@@ -16,6 +16,7 @@ from ecard.apps import APIServerErrorCode as ASEC
 
 app = logging.getLogger('app.custom')
 
+
 def parse_info(data):
     """
     parser_info:
@@ -24,6 +25,7 @@ def parse_info(data):
     """
     return HttpResponse(json.dumps(data, indent=4),
                         content_type="application/json")
+
 
 def usercheck():
     def wrapper(func):
@@ -65,7 +67,7 @@ def usercheck():
             # request_backup.info(str(body))
 
             return func(*args, **kwargs, user=user)
-            
+
             # if user_type == -1 or user.user_type <= user_type:
             #     return func(*args, **kwargs, user=user)
             # else:
@@ -184,9 +186,9 @@ class WechatSdk(object):
         sess = WechatSdk.gen_hash()
 
         Sessions(session_key=self.openid,
-                session_data=sess,
-                we_ss_key=self.wxsskey,
-                expire_date=datetime.now() + timedelta(30)).save()
+                 session_data=sess,
+                 we_ss_key=self.wxsskey,
+                 expire_date=datetime.now() + timedelta(30)).save()
 
         user = User(open_id=self.openid)
         user.save()
@@ -302,24 +304,24 @@ class EcardManager(object):
             return {'message': 'failed'}
 
         user = UserProfile(open_id=self.user,
-                    ecard_key=key,
-                    name=name,
-                    subject=subject,
-                    grade=grade)
+                           ecard_key=key,
+                           name=name,
+                           subject=subject,
+                           grade=grade)
 
         self.user.is_bind = 0
         self.user.save()
 
         user.save()
 
-        return {'message':'ok','info':UserManager.get_user_info(self.user)}
+        return {'message': 'ok', 'info': UserManager.get_user_info(self.user)}
 
     def balance_card(self):
         client = requests.Session()
 
         if self.user.is_bind == 1:
             return {'message': 'failed'}
-        
+
         self.key = UserManager.get_user_key(self.user)
 
         client.get(self.ecardurl + str(self.key))
@@ -327,7 +329,7 @@ class EcardManager(object):
 
         soup = BeautifulSoup(balance_html.text, 'lxml')
         tmp = soup.select('div.container p')[0].text.split()
-        
+
         info = {}
 
         info['kpye'] = tmp[1]
@@ -345,20 +347,20 @@ class EcardManager(object):
 
         self.key = UserManager.get_user_key(self.user)
         client.get(self.ecardurl + str(self.key))
-        month = self.data.get('month',0)
+        month = self.data.get('month', 0)
         detail_html = client.get(self.detail + str(month))
 
         soup = BeautifulSoup(detail_html.text, 'lxml')
         alldetail = soup.select('tr')
         tmpinfo = []
-        
+
         for deta in alldetail:
             tmp = []
             res = {}
 
             for li in deta.select('td'):
                 tmp.append(li.text.strip())
-            print (tmp)
+            print(tmp)
             if len(tmp) != 0:
                 res['time'] = tmp[1]
                 res['type'] = tmp[2]
@@ -371,14 +373,3 @@ class EcardManager(object):
 
         return {'message': 'ok',
                 'info': tmpinfo}
-
-
-
-
-
-
-
-
-
-
-        
