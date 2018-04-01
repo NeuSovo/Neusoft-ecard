@@ -179,7 +179,7 @@ class WechatSdk(object):
 
     def save_user(self):
         have_user = User.objects.filter(open_id=self.openid)
-        if len(have_user) != 0:
+        if have_user.exists():
             # 已注册过
             return self.flush_session()
 
@@ -201,7 +201,11 @@ class WechatSdk(object):
                 'message': ASEC.getMessage(ASEC.REG_SUCCESS)}
 
     def flush_session(self):
-        this_user = Sessions.objects.get(session_key=self.openid)
+        try:
+            this_user = Session.objects.get(session_key=self.openid)
+        except Exception as e:
+            this_user = Session()        
+
         sess = WechatSdk.gen_hash()
 
         this_user.we_ss_key = self.wxsskey
