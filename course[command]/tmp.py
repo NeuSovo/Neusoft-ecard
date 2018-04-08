@@ -75,13 +75,12 @@ def main():
     #             continue
 
     with open('result.txt', 'r', encoding='utf-8') as f:
-        for fff in f.readlines():
+        for fff in f.readlines()[:1]:
             deal(fff)
             print ('-'*100)
             
 def deal(info) -> str:
     weekd = ['一','二','三','四','五','六','日']
-    stime = ['一二','三四','五六','七八','九十','这特么是啥','还有?']
     sttt = 0
     wkkk = 0
     soup = bf(info,'lxml')
@@ -91,7 +90,16 @@ def deal(info) -> str:
         cl = week.find_all('td',attrs={'valign':'top'})
         wkkk = 0
         for i in cl:
-            print (weekd[wkkk],i.get_text())
+            info = str(i).split('<br/>')
+            # print (weekd[wkkk],info[0],info[1:])
+            for tt in info:
+                if tt == info[0]:
+                    subject = bf(tt,'lxml').get_text()
+                    print (weekd[wkkk],subject,end='')
+                elif tt != '</td>':
+                    print (tt, end='')
+            print (end='\n')
             wkkk +=1
+        print ('-'*100)
 
 main()

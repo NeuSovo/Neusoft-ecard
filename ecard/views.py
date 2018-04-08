@@ -1,4 +1,5 @@
 import json
+from django.http import JsonResponse
 from django.shortcuts import HttpResponse
 from ecard.apps import APIServerErrorCode as ASEC
 from ecard.handle import (usercheck,WechatSdk,LoginManager,EcardManager)
@@ -10,8 +11,7 @@ def parse_info(data):
     :param data must be a dict
     :return dict data to json,and return HttpResponse
     """
-    return HttpResponse(json.dumps(data, indent=4),
-                        content_type="application/json")
+    return JsonResponse(data)
 
 
 def register_view(request):
@@ -86,17 +86,14 @@ def card_view(request, action, user):
     body = json.loads(request.body)
     response = parse_info({'message': 'failed'})
 
-    result = EcardManager(postdata=body, user=user)
+    ecard = EcardManager(postdata=body, user=user)
+    try:
+        method_name = action + '_card'
+        result = getattr(ecard, method_name)
+    except AttributeError as e:
+        response = HttpResponse()
+        response.status_code = 404
+        return response
 
-    if action == 'bind':
-        response = parse_info(result.bind_card())
-
-    if action == 'balance':
-        response = parse_info(result.balance_card())
-
-    if action == 'detail':
-        response = parse_info(result.detail_card())
-
+    response = parse_info(result())
     return response
-
-

@@ -9,7 +9,7 @@ from hashlib import sha256, md5
 from datetime import datetime, timedelta
 
 from django.conf import settings
-from django.shortcuts import HttpResponse
+from django.http import JsonResponse
 
 from ecard.models import *
 from ecard.apps import APIServerErrorCode as ASEC
@@ -23,8 +23,7 @@ def parse_info(data):
     :param data must be a dict
     :return dict data to json,and return HttpResponse
     """
-    return HttpResponse(json.dumps(data, indent=4),
-                        content_type="application/json")
+    return JsonResponse(data)
 
 
 def usercheck():

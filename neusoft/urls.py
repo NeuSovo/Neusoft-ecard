@@ -16,11 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from ecard.views import *
+from course.views import room_view
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('auth/reg',register_view),
-    path('auth/login',login_view),
+    path('auth/reg', register_view),
+    path('auth/login', login_view),
 
-    path('user/card/<str:action>',card_view)
+    path('user/card/<str:action>', card_view),
+
+    path('user/course/<str:action>', room_view)# er: empty_room
 ]
