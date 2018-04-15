@@ -1,36 +1,48 @@
 import random
+from datetime import datetime
 from django.http import JsonResponse
 from course.models import *
 class ClassRoom(object):
     """docstring for ClassRoom"""
     def __init__(self, body):
-        self.date = body.get('date','0')
+        self.date = body.get('date','20180409')
         self.classname = body.get('class','0')
         self.teacher = body.get('teacher','0')
+        self.floor = body.get('floor','A7')
 
     def er_room(self):
-        if int(self.date) <= 0:
-            return {'message': 'failed'}
-        info = [
-            {'RoomID':'A7-213',
-             'RoomTotalSeatNum': random.randint(30,100),
-             'RoomTime': random.randint(1,5)},
-            {'RoomID':'A6-203',
-             'RoomTotalSeatNum': random.randint(30,100),
-             'RoomTime': random.randint(1,5)},
-            {'RoomID':'A5-204',
-             'RoomTotalSeatNum': random.randint(30,100),
-             'RoomTime': random.randint(1,5)},
-            {'RoomID':'A5-210',
-             'RoomTotalSeatNum': random.randint(30,100),
-             'RoomTime': random.randint(1,5)},
-            {'RoomID':'A2-209',
-             'RoomTotalSeatNum': random.randint(30,100),
-             'RoomTime': random.randint(1,5)},
-            {'RoomID':'A1-207',
-             'RoomTotalSeatNum': random.randint(30,100),
-             'RoomTime': random.randint(1,5)},
-            ]
+        now_week = datetime.strptime(str(self.date), '%Y%m%d').isocalendar()
+        all_class = RoomModel.objects.filter(RoomFloor='{}  '.format(self.floor))
+        
+        def handle_date(date,week):
+            res = []
+            for i in date.split(','):
+                l = [int(i) for i in i.split('-')]
+                b,e = l[0],l[len(l)-1] + 1
+                res += list(range(b,e))
+            return week in res
+
+        def command(floor='A7'):
+            all_room = {}
+            a = RoomModel.objects.raw("select 1 as id,RoomId as RoomId from course_roommodel where RoomFloor='{}  ' group by RoomId".format(floor))
+            for i in a:
+                all_room[i.RoomId] = [True,True,True,True,True]
+        
+            return all_room
+
+        all_room = command(self.floor)
+        for i in all_class.iterator():
+            if (handle_date(i.ClassTime,now_week[1]-9) and i.RoomWeek == now_week[2]):
+                all_room[i.RoomID][i.RoomTime-1] = False
+        info = []
+        for item in all_room:
+            for index,flag in enumerate(all_room[item]):
+                if flag:
+                    info.append({
+                        'RoomID':item,
+                        'RoomTime': index + 1
+                    })
+
         return {'message':'ok',
                 'info': info,
                 'date': self.date}
@@ -68,12 +80,3 @@ class ClassRoom(object):
             info.append(i.ClassTeacher)
         return {'message': 'ok',
                 'info': info}
-
-
-def command():
-    roompool = RoomModel.objects.all()
-
-    for i in roompool.iterator():
-        i.ClassTime = i.ClassTime[1:]
-        i.save()
-        print (i.ClassTime)
