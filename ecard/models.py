@@ -87,7 +87,6 @@ class EcardDetail(models.Model):
         )
 
 
-
 class Sessions(models.Model):
     session_key = models.CharField(
         max_length=100

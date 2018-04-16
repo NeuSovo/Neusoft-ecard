@@ -1,0 +1,26 @@
+from django.db import models
+from django.utils import timezone
+# Create your models here.
+class User(models.Model):
+    bind_level = (
+        (0, '已绑定'),
+        (1, '未绑定')
+    )
+    open_id = models.CharField(
+        max_length=100,
+        primary_key=True,
+        null=False)
+    is_bind = models.IntegerField(
+        default=1,
+        choices=bind_level
+        )
+
+    reg_date = models.DateTimeField(
+        auto_now_add=True
+        )
+    last_login = models.DateTimeField(
+        default=timezone.now
+        )
+
+    class Meta:
+        ordering = ['-last_login']
