@@ -3,7 +3,7 @@ import json
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from ecard.handle import usercheck
+from utils.auth import usercheck
 from course.handle import ClassRoom
 # Create your views here.
 

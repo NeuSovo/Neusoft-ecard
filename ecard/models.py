@@ -1,34 +1,10 @@
 from django.db import models
 from django.utils import timezone
 from datetime import datetime,timedelta
+from utils.models import User
 # Create your models here.
 
-class User(models.Model):
-    bind_level = (
-        (0, '已绑定'),
-        (1, '未绑定')
-    )
-    open_id = models.CharField(
-        max_length=100,
-        primary_key=True,
-        null=False)
-    is_bind = models.IntegerField(
-        default=1,
-        choices=bind_level
-        )
-
-    reg_date = models.DateTimeField(
-        auto_now_add=True
-        )
-    last_login = models.DateTimeField(
-        default=timezone.now
-        )
-
-    class Meta:
-        ordering = ['-last_login']
-
-
-class UserProfile(models.Model):
+class EcardProfile(models.Model):
     open_id = models.OneToOneField(
                 User,
                 on_delete=models.CASCADE,
@@ -85,18 +61,3 @@ class EcardDetail(models.Model):
     jzsj = models.DateTimeField(
         verbose_name='记账时间'
         )
-
-
-class Sessions(models.Model):
-    session_key = models.CharField(
-        max_length=100
-    )
-    session_data = models.CharField(
-        unique=True, max_length=100
-        )
-    we_ss_key  = models.CharField(
-        max_length=100
-        )
-    expire_date  = models.DateTimeField()
-
-        

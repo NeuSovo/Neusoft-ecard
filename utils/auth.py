@@ -1,12 +1,14 @@
 import time
 import json
 import logging
-from utils.models import *
-from utils.tools import *
-from django.http import JsonResponse
 from datetime import datetime, timedelta
-from utils.apps import APIServerErrorCode as ASEC
 
+from utils.models import User
+from ecard.models import EcardProfile
+from utils.tools import *
+
+from django.http import JsonResponse
+from utils.apps import APIServerErrorCode as ASEC
 
 app = logging.getLogger('app.custom')
 request_backup = logging.getLogger('app.backup')
@@ -21,7 +23,7 @@ def parse_info(data):
     return JsonResponse(data)
 
 
-def usercheck(user_type=-1):
+def usercheck():
     def wrapper(func):
         def inner_wrapper(*args, **kwargs):
             result = {}
@@ -50,14 +52,10 @@ def usercheck(user_type=-1):
             user = User.objects.get(wk=str(wk))
 
             app.info("[{}][{}][{}][{}]".format(
-                func.__name__, user.wk, action, user.user_type))
+                func.__name__, user.wk, action))
 
             request_backup.info(str(body))
-
-            if user_type == -1 or user.user_type <= user_type:
-                return func(*args, **kwargs, user=user, body=body)
-            else:
-                return parse_info({'message': 'user_type failed'})
+            return func(*args, **kwargs, user=user, body=body)
 
         return inner_wrapper
 
@@ -153,20 +151,6 @@ class LoginManager(object):
 class UserManager(object):
 
     @staticmethod
-    def get_user(wckey=None):
-        """     
-        :param wckey:
-        :return: user
-        """
-        if None:
-            return None
-
-        user_key = Sessions.objects.get(session_data=wckey)
-        user = User.objects.get(open_id=user_key.session_key)
-
-        return user
-
-    @staticmethod
     def get_user_info(user):
         """
         :param user:
@@ -176,7 +160,7 @@ class UserManager(object):
         result = {}
 
         if user.is_bind == 0:
-            profile = UserProfile.objects.get(open_id=user)
+            profile = EcardProfile.objects.get(open_id=user)
             result['is_bind'] = 0
             result['name'] = profile.name
             result['subject'] = profile.subject
@@ -188,4 +172,4 @@ class UserManager(object):
 
     @staticmethod
     def get_user_key(user):
-        return UserProfile.objects.get(open_id=user).ecard_key
+        return EcardProfile.objects.get(open_id=user).ecard_key
