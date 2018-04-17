@@ -15,9 +15,8 @@ def parse_info(data):
 
 
 @usercheck()
-def card_view(request, action, user):
+def card_view(request, action, user, body=None):
     response = ''
-    body = json.loads(request.body)
     response = parse_info({'message': 'failed'})
 
     ecard = EcardManager(postdata=body, user=user)

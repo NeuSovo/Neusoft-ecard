@@ -43,16 +43,16 @@ def usercheck():
                 return response
 
             if redis_session.exists(wckey):
-                wk = redis_session.get(wckey).decode('utf-8')
+                open_id = redis_session.get(wckey).decode('utf-8')
             else:
                 result['code'] = ASEC.SESSION_NOT_WORK
                 result['message'] = ASEC.getMessage(ASEC.SESSION_NOT_WORK)
                 return parse_info(result)            
 
-            user = User.objects.get(wk=str(wk))
+            user = User.objects.get(open_id=str(open_id))
 
-            app.info("[{}][{}][{}][{}]".format(
-                func.__name__, user.wk, action))
+            # app.info("[{}][{}][{}]".format(
+            #     func.__name__, user.open_id, action))
 
             request_backup.info(str(body))
             return func(*args, **kwargs, user=user, body=body)
@@ -85,17 +85,17 @@ class WechatSdk(object):
             return False
 
     def save_user(self):
-        have_user = User.objects.filter(wk=self.openid)
+        have_user = User.objects.filter(open_id=self.openid)
         if have_user.exists():
             # 已注册过
             return self.flush_session()
 
         sess = gen_hash()
         redis_session.set(sess,self.openid,ex=259200)
-        user = User(wk=self.openid)
+        user = User(open_id=self.openid)
         user.save()
         # 自动为用户生成Profile
-        # Profile(wk=user).save()
+        # Profile(open_id=user).save()
 
         # 注册成功，分配cookie
         return {'sess': sess,
@@ -143,7 +143,6 @@ class LoginManager(object):
         user.save()
 
         return {'code': ASEC.LOGIN_SUCCESS,
-                'user_type': user.user_type,
                 'info': user_info,
                 'message': ASEC.getMessage(ASEC.LOGIN_SUCCESS)}
 
@@ -155,18 +154,18 @@ class UserManager(object):
         """
         :param user:
         :return: name,avatar_links
-                and base64(user.wk)
+                and base64(user.open_id)
         """
         result = {}
 
-        if user.is_bind == 0:
+        if user.is_bind == 1:
             profile = EcardProfile.objects.get(open_id=user)
-            result['is_bind'] = 0
+            result['is_bind'] = 1
             result['name'] = profile.name
             result['subject'] = profile.subject
             result['grade'] = profile.grade
         else:
-            result['is_bind'] = 1
+            result['is_bind'] = 0
 
         return result
 

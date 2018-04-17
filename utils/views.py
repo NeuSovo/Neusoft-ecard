@@ -29,8 +29,10 @@ def register_view(request):
         response.status_code = 400
         return response
 
+    # update 2018/03/07
+    # request.GET['name'],request.GET['url'])
     wk = WechatSdk(request.GET['code'])
-    if not wk.get_openid():
+    if not wk.check():
         result['code'] = ASEC.WRONG_PARAME
         result['message'] = ASEC.getMessage(ASEC.WRONG_PARAME)
         response = parse_info(result)

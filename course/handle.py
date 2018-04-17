@@ -2,6 +2,7 @@ import random
 from datetime import datetime
 from django.http import JsonResponse
 from course.models import *
+from utils.tools import redis_global
 class ClassRoom(object):
     """docstring for ClassRoom"""
     def __init__(self, body):

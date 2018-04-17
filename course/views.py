@@ -17,9 +17,8 @@ def parse_info(data):
 
 
 @usercheck()
-def room_view(request, user=None ,action=None):
+def room_view(request, user=None ,action=None, body=None):
     response = ''
-    body = json.loads(request.body)
     room = ClassRoom(body=body)
 
     try:

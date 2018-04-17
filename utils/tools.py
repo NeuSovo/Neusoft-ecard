@@ -10,6 +10,7 @@ from django.conf import settings
 APPID = 'wx5c7d55175f3872b7'
 SECRET = '6050b3ca9c9b3823768ae1867ef9036e'
 redis_session = redis.StrictRedis(host='127.0.0.1', port=6379, db=3)
+redis_global = redis.StrictRedis(host='127.0.0.1', port=6379, db=4)
 
 try:
     random = random.SystemRandom()

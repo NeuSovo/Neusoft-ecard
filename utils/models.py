@@ -3,15 +3,15 @@ from django.utils import timezone
 # Create your models here.
 class User(models.Model):
     bind_level = (
-        (0, '已绑定'),
-        (1, '未绑定')
+        (0, '未绑定'),
+        (1, '已绑定')
     )
     open_id = models.CharField(
         max_length=100,
         primary_key=True,
         null=False)
     is_bind = models.IntegerField(
-        default=1,
+        default=0,
         choices=bind_level
         )
 

@@ -13,7 +13,7 @@ from django.http import JsonResponse
 
 from ecard.models import EcardProfile
 from utils.auth import UserManager
-from ecard.apps import APIServerErrorCode as ASEC
+from utils.tools import redis_global
 
 app = logging.getLogger('app.custom')
 
@@ -40,6 +40,12 @@ class EcardManager(object):
     #         UserProfile.objects.get
 
     def bind_card(self):
+        has_bind = True
+        try:
+            ecard = EcardProfile.objects.get(open_id=self.user)
+        except Exception:
+            has_bind = False
+
         key = EcardManager.split_key(self.data['key'])
         client = requests.Session()
 
@@ -63,26 +69,34 @@ class EcardManager(object):
             app.info(str(e))
             return {'message': 'failed'}
 
-        user = EcardProfile(open_id=self.user,
-                           ecard_key=key,
-                           name=name,
-                           subject=subject,
-                           grade=grade)
+        if has_bind:
+            ecard.ecard_key = key
+            ecard.name = name
+            ecard.subject = subject
+            ecard.grade = grade
+        else:
+            ecard = EcardProfile(open_id=self.user,
+                                 ecard_key=key,
+                                 name=name,
+                                 subject=subject,
+                                 grade=grade)
 
-        self.user.is_bind = 0
-        self.user.save()
-
-        user.save()
-
+            self.user.is_bind = 1
+            self.user.save()
+        ecard.save()
         return {'message': 'ok', 'info': UserManager.get_user_info(self.user)}
 
     def balance_card(self):
         client = requests.Session()
 
-        if self.user.is_bind == 1:
+        if self.user.is_bind == 0:
             return {'message': 'failed'}
 
         self.key = UserManager.get_user_key(self.user)
+        redis_key = 'balance_' + self.key
+        # Redis
+        if redis_global.exists(redis_key):
+            return eval(redis_global.get(redis_key))
 
         client.get(self.ecardurl + str(self.key))
         balance_html = client.get(self.Balance)
@@ -96,23 +110,32 @@ class EcardManager(object):
         info['zhye'] = tmp[4]
         info['gdye'] = tmp[7]
 
-        return {'message': 'ok',
-                'info': info}
+        result = {'message': 'ok',
+                  'info': info}
+        # Redis
+        redis_global.set(redis_key, result, ex=600)
+        return result
 
     def detail_card(self):
         client = requests.Session()
-
-        if self.user.is_bind == 1:
+        month = self.data.get('month', 0)
+        if self.user.is_bind == 0:
             return {'message': 'failed'}
 
         self.key = UserManager.get_user_key(self.user)
+
+        redis_key = 'detail_' + month + '_' + self.key
+        # Redis
+        if redis_global.exists(redis_key):
+            return eval(redis_global.get(redis_key))
+
         client.get(self.ecardurl + str(self.key))
-        month = self.data.get('month', 0)
+
         detail_html = client.get(self.detail + str(month))
 
         soup = BeautifulSoup(detail_html.text, 'lxml')
         alldetail = soup.select('tr')
-        tmpinfo = []
+        info = []
 
         for deta in alldetail:
             tmp = []
@@ -120,16 +143,18 @@ class EcardManager(object):
 
             for li in deta.select('td'):
                 tmp.append(li.text.strip())
-            print(tmp)
             if len(tmp) != 0:
                 res['time'] = tmp[1]
                 res['type'] = tmp[2]
                 res['skck'] = tmp[4]
                 res['jye'] = tmp[5]
                 res['yue'] = tmp[6]
-                tmpinfo.append(res)
+                info.append(res)
 
-        tmpinfo.reverse()
+        info.reverse()
 
-        return {'message': 'ok',
-                'info': tmpinfo}
+        result = {'message': 'ok',
+                  'info': info}
+        # Redis
+        redis_global.set(redis_key, result, ex=600)
+        return result
