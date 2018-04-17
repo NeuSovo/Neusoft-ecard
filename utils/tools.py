@@ -1,7 +1,6 @@
 import time
 import redis
 import base64
-import qrcode
 import random
 import requests
 from hashlib import sha256, md5
