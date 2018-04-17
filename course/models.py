@@ -43,4 +43,44 @@ class RoomModel(models.Model):
         default = 0
     )
 
-    
+
+class RoomTest(models.Model):
+
+    class Meta:
+        verbose_name = "RoomTest"
+        verbose_name_plural = "RoomTests"
+
+    RoomID = models.CharField(
+        max_length=30,
+        null=True
+    )
+
+    ClassName = models.CharField(
+        max_length=155,
+        null=True
+    )
+
+    ClassTeacher = models.CharField(
+        max_length=120,
+        null=True
+    )
+
+    ClassWeek = models.CharField(
+        max_length=30,
+        null=True
+    )
+
+    ClassCount = models.IntegerField(default=0)
+
+    ClassGrade = models.TextField(
+        default='',
+        null=True
+    )
+
+    ClassTimeWeek = models.IntegerField(default=0)
+
+    ClassTimeTime = models.CharField(
+        default='0',
+        max_length=10,
+        null=True
+    )

@@ -81,3 +81,25 @@ class ClassRoom(object):
             info.append(i.ClassTeacher)
         return {'message': 'ok',
                 'info': info}
+
+
+
+def test():
+    from .command import main
+    for j in main():
+        allclass = []
+        try:
+            for i in j:
+                # print (i)
+                allclass.append(RoomTest(RoomID=i['RoomId'],
+                                  ClassName=i['ClassName'],
+                                  ClassTeacher=i['ClassTeacher'],
+                                  ClassWeek=i['ClassWeek'],
+                                  ClassCount=int(i['ClassCount']),
+                                  ClassGrade=i['ClassGrade'],
+                                  ClassTimeWeek=int(i['ClassTimeWeek']),
+                                  ClassTimeTime=i['ClassTimeTime']))
+        except:
+            continue
+
+        RoomTest.objects.bulk_create(allclass)
