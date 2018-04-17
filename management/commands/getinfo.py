@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 import requests
 from bs4 import BeautifulSoup as bf
-# from prettytable import PrettyTable
 from classinfo import roominfo
 
-# table = PrettyTable(["一", "二", "三", "四", "五", "六", "日"])
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
     'Cookie': 'ASP.NET_SessionId=x1vexibsducg1taqamzeed3d',
@@ -41,11 +39,10 @@ def getinfo(c, classkey):
         else:
             pass
 
-
-
     all = soup.select('table')
     with open('result.txt', 'a+', encoding='utf-8') as f:
         f.write(str(all[1:]) + '\n')
+
 
 
 def get_class_code():
@@ -84,32 +81,5 @@ def main():
             else:
                 continue
 
-    # with open('result.txt', 'r', encoding='utf-8') as f:
-    #     for fff in f.readlines()[:1]:
-    #         deal(fff)
-    #         print ('-'*100)
-            
-# def deal(info) -> str:
-#     weekd = ['一','二','三','四','五','六','日']
-#     sttt = 0
-#     wkkk = 0
-#     soup = bf(info,'lxml')
-#     jxl = soup.find_all('td',attrs={'align':'left'})
-#     print ('-'*30,jxl[0].get_text(),'-'*30)
-#     for week in soup.find_all('tr')[2:]:
-#         cl = week.find_all('td',attrs={'valign':'top'})
-#         wkkk = 0
-#         for i in cl:
-#             info = str(i).split('<br/>')
-#             # print (weekd[wkkk],info[0],info[1:])
-#             for tt in info:
-#                 if tt == info[0]:
-#                     subject = bf(tt,'lxml').get_text()
-#                     print (weekd[wkkk],subject,end='')
-#                 elif tt != '</td>':
-#                     print (tt, end='')
-#             print (end='\n')
-#             wkkk +=1
-#         print ('-'*100)
 
-main()
+get_class_code()

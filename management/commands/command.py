@@ -1,5 +1,6 @@
 import re
 from bs4 import BeautifulSoup as bf
+from course.models import RoomTest
 all_time = {
     '1-2节]': '1',
     '1-2节]双': '1',
@@ -28,8 +29,8 @@ all_week = {
     '六':6,
     '日':7,
 }
+result = []
 def deal(info) -> dict:
-    result = []
     soup = bf(info,'lxml')
     allinfo = soup.select('table')
     try:
@@ -68,7 +69,28 @@ def deal(info) -> dict:
         index += 1
     return result
 
+
 def main():
-    with open('course/result.txt','r',encoding='utf-8') as f:
+    with open('result.txt','r',encoding='utf-8') as f:
         for i in f.readlines():
             yield deal(i)
+
+
+def test():
+    for j in main():
+        allclass = []
+        try:
+            for i in j:
+                print (i)
+                allclass.append(RoomTest(RoomID=i['RoomId'],
+                                         ClassName=i['ClassName'],
+                                         ClassTeacher=i['ClassTeacher'],
+                                         ClassWeek=i['ClassWeek'],
+                                         ClassCount=int(i['ClassCount']),
+                                         ClassGrade=i['ClassGrade'],
+                                         ClassTimeWeek=int(i['ClassTimeWeek']),
+                                         ClassTimeTime=i['ClassTimeTime']))
+        except:
+            continue
+
+        RoomTest.objects.bulk_create(allclass)

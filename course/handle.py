@@ -11,10 +11,12 @@ class ClassRoom(object):
     """docstring for ClassRoom"""
 
     def __init__(self, body):
-        self.date = body.get('date', '20180409')
+        self.date = body.get('date', datetime.now().strftime("%Y%m%d"))
         self.classname = body.get('class', '0')
         self.teacher = body.get('teacher', '0')
-        self.floor = body.get('floor', 'A7')
+        self.floor = body.get('floor', 'A')
+        self.bdate = body.get('bdate', 1)
+        self.edate = body.get('edate', 6)
         self.grade = body.get('grade', '无')
 
     def er_room(self):
@@ -47,7 +49,7 @@ class ClassRoom(object):
         info = []
         for item in all_room:
             for index, flag in enumerate(all_room[item]):
-                if flag:
+                if flag and (index + 1 >= int(self.bdate)) and (index + 1 <= int(self.edate)):
                     info.append({
                         'RoomID': item,
                         'RoomTime': index + 1
@@ -120,24 +122,3 @@ class ClassRoom(object):
                   'info': info}
         redis_global.set(key, result, ex=600)
         return result
-
-
-def test():
-    from .command import main
-    for j in main():
-        allclass = []
-        try:
-            for i in j:
-                # print (i)
-                allclass.append(RoomTest(RoomID=i['RoomId'],
-                                         ClassName=i['ClassName'],
-                                         ClassTeacher=i['ClassTeacher'],
-                                         ClassWeek=i['ClassWeek'],
-                                         ClassCount=int(i['ClassCount']),
-                                         ClassGrade=i['ClassGrade'],
-                                         ClassTimeWeek=int(i['ClassTimeWeek']),
-                                         ClassTimeTime=i['ClassTimeTime']))
-        except:
-            continue
-
-        RoomTest.objects.bulk_create(allclass)
