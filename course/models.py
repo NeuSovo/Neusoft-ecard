@@ -49,7 +49,16 @@ class RoomTest(models.Model):
     class Meta:
         verbose_name = "RoomTest"
         verbose_name_plural = "RoomTests"
-
+    def info(self):
+        return {
+            'RoomID': self.RoomID,
+            'ClassName': self.ClassName,
+            'ClassTeacher': self.ClassTeacher,
+            'ClassWeek': self.ClassWeek,
+            'ClassCount': self.ClassCount,
+            'ClassTimeWeek': self.ClassTimeWeek,
+            'ClassTimeTime': self.ClassTimeTime
+        }
     RoomID = models.CharField(
         max_length=30,
         null=True

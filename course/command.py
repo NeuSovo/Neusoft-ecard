@@ -28,8 +28,8 @@ all_week = {
     '六':6,
     '日':7,
 }
-result = []
 def deal(info) -> dict:
+    result = []
     soup = bf(info,'lxml')
     allinfo = soup.select('table')
     try:
