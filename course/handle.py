@@ -32,7 +32,7 @@ class ClassRoom(object):
                 res += list(range(b, e))
             return week in res
 
-        def command(floor='A7'):
+        def command(floor='A'):
             all_room = {}
             a = RoomTest.objects.raw(
                 "select 1 as id,RoomID from course_roomtest where RoomID like '{}%%' group by RoomId ".format(floor))
@@ -61,18 +61,18 @@ class ClassRoom(object):
 
     def getclass_room(self):
         info = []
-        allclass = RoomTest.objects.filter(ClassName=self.classname)
+        allclass = RoomTest.objects.filter(ClassName__icontains=self.classname)
         for i in allclass.iterator():
-            info.append(i.info())
+            info.append(i.info(has_grade=True))
 
-        return {'message': 'ok',
+        return {'message': 'ok', 
                 'info': info}
 
     def getteacher_room(self):
         info = []
         allteacher = RoomTest.objects.filter(ClassTeacher=self.teacher)
         for i in allteacher.iterator():
-            info.append(i.info())
+            info.append(i.info(has_grade=True))
 
         return {'message': 'ok',
                 'info': info}

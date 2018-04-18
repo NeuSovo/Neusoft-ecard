@@ -1,0 +1,104 @@
+INFO 2018-04-17 20:49:05,631 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'floor': 'A7'}
+INFO 2018-04-17 20:50:16,897 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'floor': 'A7'}
+INFO 2018-04-17 20:50:32,681 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'floor': 'A7'}
+INFO 2018-04-17 20:51:06,530 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'floor': 'A7'}
+INFO 2018-04-17 20:51:21,351 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'floor': 'A7'}
+INFO 2018-04-17 20:51:29,970 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'date': '20180417', 'floor': 'A7'}
+INFO 2018-04-17 20:53:21,432 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'date': '20180417', 'floor': 'A7'}
+INFO 2018-04-17 20:53:32,339 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'date': '20180417', 'floor': 'A2'}
+INFO 2018-04-17 20:53:40,261 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'date': '20180417', 'floor': 'A1'}
+INFO 2018-04-17 21:06:36,561 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:11:35,842 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:11:36,973 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:11:52,768 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:11:53,477 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:11:53,904 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:11:54,056 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:12:14,473 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:12:16,301 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:12:24,838 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:12:25,490 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:12:26,006 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:12:26,158 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:12:26,314 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:12:26,462 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:12:26,612 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:12:26,758 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:12:55,149 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¹¨³¯¿Ë'}
+INFO 2018-04-17 21:13:10,294 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:15:00,663 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:15:26,471 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:18:11,960 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:18:13,645 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:19:18,554 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:20:02,513 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:34:48,828 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:35:02,341 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:35:19,878 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:35:38,291 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'floor': 'A7'}
+INFO 2018-04-17 21:35:54,230 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 21:37:29,409 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:38:27,776 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:38:30,907 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:38:36,665 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:38:37,045 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:38:37,201 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:38:37,344 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:38:37,498 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:38:37,623 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-17 21:44:36,852 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'AndroidÓ¦ÓÃ¿ª·¢I'}
+INFO 2018-04-17 21:44:52,349 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': '[52001CC0BC]Êý¾Ý½á¹¹I'}
+INFO 2018-04-17 21:55:03,350 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'Èí¼þ16010'}
+INFO 2018-04-17 21:55:57,274 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'Èí¼þ16010'}
+INFO 2018-04-17 21:56:26,329 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'Èí¼þ16010'}
+INFO 2018-04-17 21:56:53,613 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'Èí¼þ16010'}
+INFO 2018-04-17 21:58:16,801 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'Èí¼þ16010'}
+INFO 2018-04-17 21:58:23,246 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'Èí¼þ160009'}
+INFO 2018-04-17 21:58:25,777 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'Èí¼þ16009'}
+INFO 2018-04-17 21:58:45,014 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'Èí¼þ16009'}
+INFO 2018-04-17 21:58:51,191 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'Èí¼þ16008'}
+INFO 2018-04-17 21:58:58,058 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'ÐÅ¹Ü16008'}
+INFO 2018-04-17 21:59:16,941 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': '¼ÆËã»ú16008'}
+INFO 2018-04-17 21:59:29,152 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'ÈÕÓï16008'}
+INFO 2018-04-17 22:01:44,011 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'floor': 'A'}
+INFO 2018-04-17 22:03:58,590 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'Èí¼þ16010'}
+INFO 2018-04-17 22:27:53,807 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'date': '20180417', 'floor': 'A7'}
+INFO 2018-04-17 23:21:39,710 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'date': '20180417', 'floor': 'A7', 'bdate': '2', 'edate': '4'}
+INFO 2018-04-17 23:22:27,693 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'date': '20180417', 'floor': 'A7', 'bdate': '2', 'edate': '4'}
+INFO 2018-04-17 23:22:40,410 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'date': '20180417', 'floor': 'A7', 'edate': '2'}
+INFO 2018-04-17 23:23:02,000 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'date': '20180417', 'bdate': '1', 'edate': '2'}
+INFO 2018-04-17 23:23:18,407 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'bdate': '1', 'edate': '2'}
+INFO 2018-04-17 23:24:22,985 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'bdate': '1', 'edate': '2'}
+INFO 2018-04-17 23:24:26,162 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'bdate': '1', 'edate': '2'}
+INFO 2018-04-17 23:24:26,854 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'bdate': '1', 'edate': '2'}
+INFO 2018-04-17 23:24:38,009 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 23:25:03,874 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}}
+INFO 2018-04-17 23:29:23,804 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'bdate': '2', 'edate': '4'}
+INFO 2018-04-18 23:30:11,882 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'AndroidÓ¦ÓÃ¿ª·¢I'}
+INFO 2018-04-18 23:30:36,467 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'AndroidÓ¦ÓÃ¿ª·¢I'}
+INFO 2018-04-18 23:31:35,175 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'Android'}
+INFO 2018-04-18 23:31:39,325 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'android'}
+INFO 2018-04-18 23:31:57,022 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'android'}
+INFO 2018-04-18 23:32:02,677 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'linux'}
+INFO 2018-04-18 23:32:11,067 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'python'}
+INFO 2018-04-18 23:32:25,064 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': '·þÎñÆ÷'}
+INFO 2018-04-18 23:32:33,062 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': '¼¯Èº'}
+INFO 2018-04-18 23:32:43,470 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'ÍøÂç'}
+INFO 2018-04-18 23:34:33,091 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'ÍøÂç'}
+INFO 2018-04-18 23:44:34,871 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'ÍøÂç'}
+INFO 2018-04-18 23:46:33,644 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'ÎÞÏß¾ÖÓòÍø¼¼ÊõÓëÐ­Òé'}
+INFO 2018-04-18 23:46:47,416 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'ÎÞÏß'}
+INFO 2018-04-18 23:46:54,870 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'web'}
+INFO 2018-04-18 23:47:05,747 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'ºó¶Ë'}
+INFO 2018-04-18 23:47:11,186 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'ÈÕÓï'}
+INFO 2018-04-18 23:47:27,492 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'class': 'Èí¼þ¹¤³Ì'}
+INFO 2018-04-18 23:47:54,072 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-18 23:48:09,582 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-18 23:48:09,744 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-18 23:48:09,896 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-18 23:48:10,050 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-18 23:48:10,170 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'teacher': '¸¶ÀöÃ·'}
+INFO 2018-04-18 23:48:58,582 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'Èí¼þ16010'}
+INFO 2018-04-18 23:49:08,391 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'ÍøÂç16010'}
+INFO 2018-04-18 23:49:13,134 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'ÍøÂç16003'}
+INFO 2018-04-18 23:49:15,743 auth {'base_req': {'wckey': 'cdddd0bbd854a21ac7afdbd47b66c191483e6c9fcdf9cf2d7e115c8ad8ba0075'}, 'grade': 'ÍøÂç16002'}

@@ -9,7 +9,7 @@ class RoomModel(models.Model):
         verbose_name_plural = "RoomModels"
 
     def info(self):
-        return {
+        result = {
             'RoomID': self.RoomID,
             'RoomTime': self.RoomTime,
             'RoomWeek': self.RoomWeek,
@@ -18,6 +18,7 @@ class RoomModel(models.Model):
             'ClassTime': self.ClassTime,
             'RoomCount': self.RoomCount
         }
+
     RoomFloor = models.CharField(
         max_length=10
     )
@@ -49,8 +50,8 @@ class RoomTest(models.Model):
     class Meta:
         verbose_name = "RoomTest"
         verbose_name_plural = "RoomTests"
-    def info(self):
-        return {
+    def info(self, has_grade=False):
+        result = {
             'RoomID': self.RoomID,
             'ClassName': self.ClassName,
             'ClassTeacher': self.ClassTeacher,
@@ -59,6 +60,10 @@ class RoomTest(models.Model):
             'ClassTimeWeek': self.ClassTimeWeek,
             'ClassTimeTime': self.ClassTimeTime
         }
+        if has_grade:
+            result['ClassGrade'] = self.ClassGrade
+        return result
+
     RoomID = models.CharField(
         max_length=30,
         null=True
