@@ -99,3 +99,9 @@ def get_random_string(length=12,
             ).digest()
         )
     return ''.join(random.choice(allowed_chars) for i in range(length))
+
+
+def redis_cache(key, ex=600):
+    def wrapper(func):
+        def inner_wrapper(*args, **kwargs):
+            pass

@@ -76,7 +76,8 @@ class RoomTest(models.Model):
 
     ClassTeacher = models.CharField(
         max_length=120,
-        null=True
+        null=True,
+        default='0'
     )
 
     ClassWeek = models.CharField(
@@ -87,7 +88,7 @@ class RoomTest(models.Model):
     ClassCount = models.IntegerField(default=0)
 
     ClassGrade = models.TextField(
-        default='',
+        default='0',
         null=True
     )
 
