@@ -5,21 +5,10 @@ from django.contrib import admin
 from ecard.models import *
 
 
-# class UserProfileAdmin(admin.StackedInline):
-#     model = UserProfile
-#     verbose_name = '用户信息'
-#     can_delete = True
+
+class EcardProfileAdmin(admin.ModelAdmin):
+    list_display = ('open_id', 'ecard_key', 'name', 'subject', 'grade')
 
 
-# class UserAdmin(admin.ModelAdmin):
-# 	list_display = ('open_id', 'is_bind', 'last_login')
 
-# 	inlines = (UserProfileAdmin,)
-
-
-# class EcardDetailAdmin(admin.ModelAdmin):
-# 	list_display = ('detail_id','fssj','czlx','skdw','skck','jye')
-
-
-# admin.site.register(EcardDetail, EcardDetailAdmin)
-# admin.site.register(User, UserAdmin)
+admin.site.register(EcardProfile, EcardProfileAdmin)
