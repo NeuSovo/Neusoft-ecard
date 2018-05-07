@@ -65,7 +65,7 @@ class ClassRoom(object):
         for i in allclass.iterator():
             info.append(i.info(has_grade=True))
 
-        return {'message': 'ok', 
+        return {'message': 'ok',
                 'info': info}
 
     def getteacher_room(self):

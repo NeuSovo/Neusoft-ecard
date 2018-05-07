@@ -43,6 +43,6 @@ class RoomAdmin(admin.ModelAdmin):
     # ]
     # raw_id_fields = ('',)
     # readonly_fields = ('',)
-    search_fields = ('ClassTeacher', 'ClassName')
+    search_fields = ('ClassTeacher', 'ClassName', 'ClassGrade')
 
 admin.site.register(RoomTest, RoomAdmin)

@@ -47,8 +47,8 @@ class RoomModel(models.Model):
 
 class RoomTest(models.Model):
     class Meta:
-        verbose_name = "RoomTest"
-        verbose_name_plural = "RoomTests"
+        verbose_name = "课程信息"
+        verbose_name_plural = "课程信息"
         ordering = ['id']
 
     def info(self, has_grade=False):

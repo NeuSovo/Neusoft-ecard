@@ -24,3 +24,7 @@ class User(models.Model):
 
     class Meta:
         ordering = ['-last_login']
+
+    def __str__(self):
+        return u'%s' % (self.open_id)
+

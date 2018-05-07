@@ -5,6 +5,10 @@ from utils.models import User
 # Create your models here.
 
 class EcardProfile(models.Model):
+    class Meta:
+        verbose_name = "卡片信息"
+        verbose_name_plural = "卡片信息"
+
     open_id = models.OneToOneField(
                 User,
                 on_delete=models.CASCADE,
