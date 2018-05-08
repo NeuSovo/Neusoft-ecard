@@ -18,6 +18,7 @@ from django.urls import path
 from ecard.views import card_view
 from utils.views import login_view,register_view
 from course.views import room_view
+from band.views import bindorder_view
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -26,5 +27,7 @@ urlpatterns = [
 
     path('user/card/<str:action>', card_view),
 
-    path('user/course/<str:action>', room_view)# er: empty_room
+    path('user/course/<str:action>', room_view),# er: empty_room
+
+    path('user/band/<str:action>', bindorder_view) # new, receive, confirm. get, all
 ]

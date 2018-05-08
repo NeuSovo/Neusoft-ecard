@@ -41,8 +41,8 @@ MANAGERS = ADMINS
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST= 'smtp.exmail.qq.com'
 EMAIL_PORT= 465        
-EMAIL_HOST_USER = 'i@zxh326.cn'  
-EMAIL_HOST_PASSWORD = 'Zxh326//' 
+EMAIL_HOST_USER = ''  
+EMAIL_HOST_PASSWORD = 'Z' 
 EMAIL_SUBJECT_PREFIX = 'website' 
 EMAIL_USE_SSL = True 
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = EMAIL_HOST_USER 
@@ -130,7 +130,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ecard',
     'course',
-    'utils'
+    'utils',
+    'band'
 ]
 
 MIDDLEWARE = [
@@ -170,8 +171,8 @@ WSGI_APPLICATION = 'neusoft.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'neusoft',
-        'USER': 'root',
+        'NAME': 'Neusoft',
+        'USER': 'neusoft',
         'PASSWORD': '123456',
         'HOST': '127.0.0.1',
         'PORT': '3306',
