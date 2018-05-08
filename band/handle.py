@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import logging
 from band.models import BandOrder
-from utils.exceptions import UpdateStatusError
+from band.exceptions import UpdateStatusError
+from band.apps import OrderStatusConfig as OSC
 
 app = logging.getLogger('app.custom')
+
 class BandOrderHandle:
     def __init__(self, body, issue_user):
         self.order_id = body.get('order_id', None)
@@ -32,7 +34,7 @@ class BandOrderHandle:
             return {'message': 'order_id Error'}
 
         try:
-            band_o.update_order_status(2, self.issue_user)
+            band_o.update_order_status(OSC.Received, self.issue_user)
         except UpdateStatusError as e:
             app.warn(str(e))
             return {'message': str(e)}
@@ -44,7 +46,7 @@ class BandOrderHandle:
            return {'message': 'order_id Error'}
 
        try:
-           band_o.update_order_status(1, self.issue_user)
+           band_o.update_order_status(OSC.ToConfirm, self.issue_user)
        except UpdateStatusError as e:
            app.warn(str(e))
            return {'message': str(e)}
@@ -56,7 +58,7 @@ class BandOrderHandle:
             return {'message': 'order_id Error'}
 
         try:
-            band_o.update_order_status(0, self.issue_user)
+            band_o.update_order_status(OSC.Done, self.issue_user)
         except UpdateStatusError as e:
             app.warn(str(e))
             return {'message': str(e)}
@@ -68,12 +70,11 @@ class BandOrderHandle:
             return {'message': 'order_id Error'}
 
         try:
-            band_o.update_order_status(-1, self.issue_user)
+            info = band_o.update_order_status(OSC.Cancel, self.issue_user)
         except UpdateStatusError as e:
             app.warn(str(e))
             return {'message': str(e)}
-        return {'message': 'ok'}
-
+        return info
     """
         个人下的单。 20
         所有待领取的单。 分页
@@ -89,7 +90,7 @@ class BandOrderHandle:
         for order in band_pool.iterator():
             info.append(order.complete_info())
 
-        return {'message': 'ok', 'info': info, 'bindex': bindex + 20}
+        return {'message': 'ok', 'info': info, 'bindex': len(band_pool)}
 
     # 个人领取的单。
     def pr_band(self):
@@ -99,14 +100,14 @@ class BandOrderHandle:
         for order in band_pool.iterator():
             info.append(order.complete_info())
 
-        return {'message': 'ok', 'info': info, 'bindex': bindex + 20}
+        return {'message': 'ok', 'info': info, 'bindex': len(band_pool)}
 
     # 所有待领取的单。 分页
     def ar_band(self):
        info = []
        bindex = int(self.body.get('bindex', 0))
-       band_pool = BandOrder.objects.filter(order_status=3)[bindex:bindex + 20]
+       band_pool = BandOrder.objects.filter(order_status=OSC.UnReceive)[bindex:bindex + 20]
        for order in band_pool.iterator():
            info.append(order.simple_info())
 
-       return {'message': 'ok', 'info': info, 'bindex': bindex + 20}
+       return {'message': 'ok', 'info': info, 'bindex': len(band_pool)}

@@ -2,7 +2,8 @@ import random
 from datetime import datetime,timedelta
 from django.db import models
 from utils.models import User
-from utils.exceptions import UpdateStatusError
+from band.exceptions import UpdateStatusError
+from band.apps import OrderStatusConfig as OSC
 # Create your models here.
 
 class BandOrder(models.Model):
@@ -28,53 +29,56 @@ class BandOrder(models.Model):
     #  3 状态发起者 发起User
     # 
     order_status_choices = (
-        (-1, '已取消'),
-        (0, '已完成'),
-        (1, '待确认'),
-        (2, '已领取'),
-        (3, '待领取'),
+        (OSC.Cancel, '已取消'),
+        (OSC.Done, '已完成'),
+        (OSC.ToConfirm, '待确认'),
+        (OSC.Received, '已领取'),
+        (OSC.UnReceive, '待领取'),
     )
 
-    def update_order_status(self, status=None, issue_user=None):
-        if (status or issue_user) and (not isinstance(issue_user, User)):
-            raise UpdateStatusError(self.order_status, status, issue_user)
+    def update_order_status(self, to_status=None, issue_user=None):
+        if (to_status or issue_user) and (not isinstance(issue_user, User)):
+            raise UpdateStatusError(self.order_status, to_status, issue_user)
 
-        if status == 2:
-            if self.order_status != 3:
-                raise UpdateStatusError(self.order_status, status)
+        if to_status == OSC.Received:
+            if self.order_status != OSC.UnReceive:
+                raise UpdateStatusError(self.order_status, to_status)
 
             if issue_user == self.create_user:
-                # raise UpdateStatusError(self.order_status, status, issue_user)
+                # raise UpdateStatusError(self.order_status, to_status, issue_user)
                 pass
             self.receive_user = issue_user
             self.receive_time = datetime.now()
 
-        if status == 1:
-            if self.order_status != 2:
-                raise UpdateStatusError(self.order_status, status)
+        if to_status == OSC.ToConfirm:
+            if self.order_status != OSC.Received:
+                raise UpdateStatusError(self.order_status, to_status)
 
             if issue_user == self.receive_user:
                 pass
             else:
-                raise UpdateStatusError(self.order_status, status, issue_user)
+                raise UpdateStatusError(self.order_status, to_status, issue_user)
 
-        if status == 0:
-            if self.order_status != 1:
-                raise UpdateStatusError(self.order_status, status)
+        if to_status == OSC.Done:
+            if self.order_status != OSC.ToConfirm:
+                raise UpdateStatusError(self.order_status, to_status)
 
             if issue_user == self.create_user:
                 self.done_time = datetime.now()
             else:
-                raise UpdateStatusError(self.order_status, status, issue_user)
+                raise UpdateStatusError(self.order_status, to_status, issue_user)
 
-        if status == -1:
-            if self.order_status != 3:
-                raise UpdateStatusError(self.order_status, status)
+        if to_status == OSC.Cancel:
+            if self.order_status != OSC.UnReceive:
+                raise UpdateStatusError(self.order_status, to_status)
+                
+            if issue_user != self.create_user:
+                raise UpdateStatusError(self.order_status, to_status, issue_user)
 
             if datetime.now() - self.create_time > self.max_cancel_time:
                 return {'message': 'Expire Max Cancel Time'}
 
-        self.order_status = status
+        self.order_status = to_status
         self.save()
         return {'message': 'ok'}
 
