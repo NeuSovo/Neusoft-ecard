@@ -1,6 +1,11 @@
+import os
 import re
 from bs4 import BeautifulSoup as bf
-from course.models import RoomTest
+from django.core.management.base import BaseCommand, CommandError
+
+DEBUG = True
+if not DEBUG:
+    from course.models import RoomTest
 all_time = {
     '1-2节]': '1',
     '3-4节]': '2',
@@ -136,27 +141,41 @@ def deal(info, get_tmp=False) -> dict:
 
     return result
 
-import os
 def main(get_tmp=False):
-    with open(os.path.join(os.getcwd(),'management','commands','result.txt'),'r',encoding='utf-8') as f:
+    path = os.path.join(os.getcwd(),'course', 'management','commands','result.txt')
+    with open(path, 'r',encoding='utf-8') as f:
         for i in f.readlines():
             yield deal(i,get_tmp=get_tmp)
 
 
-def test(get_tmp=False):
+def sync_course_to_db(get_tmp=False):
     for j in main(get_tmp):
         allclass = []
         try:
             for i in j:
-                allclass.append(RoomTest(RoomID=i['RoomId'],
-                                         ClassName=i['ClassName'],
-                                         ClassTeacher=i['ClassTeacher'],
-                                         ClassWeek=i['ClassWeek'],
-                                         ClassCount=int(i['ClassCount']),
-                                         ClassGrade=i['ClassGrade'],
-                                         ClassTimeWeek=int(i['ClassTimeWeek']),
-                                         ClassTimeTime=i['ClassTimeTime']))
+                if not DEBUG:
+                    allclass.append(RoomTest(RoomID=i['RoomId'],
+                                             ClassName=i['ClassName'],
+                                             ClassTeacher=i['ClassTeacher'],
+                                             ClassWeek=i['ClassWeek'],
+                                             ClassCount=int(i['ClassCount']),
+                                             ClassGrade=i['ClassGrade'],
+                                             ClassTimeWeek=int(i['ClassTimeWeek']),
+                                             ClassTimeTime=i['ClassTimeTime']))
+                print (i)
         except:
             continue
 
-        RoomTest.objects.bulk_create(allclass)
+        if not DEBUG:
+            RoomTest.objects.bulk_create(allclass)
+
+
+class Command(BaseCommand):
+
+    def add_arguments(self, parser):
+        parser.add_argument('-t', type=int,help="1=get tmp_info", default=0)
+
+    def handle(self, *args, **options):
+        get_tmp = True if options['t'] else False
+        print (get_tmp)
+        sync_course_to_db(get_tmp)

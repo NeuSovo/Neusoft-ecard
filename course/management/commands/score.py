@@ -8,7 +8,7 @@ sel = 'http://newjw.neusoft.edu.cn/jwweb/znpk/Pri_StuSel_Drawimg.aspx?type=1&w=1
 ssel = 'http://newjw.neusoft.edu.cn/jwweb/znpk/Pri_StuSel_rpt.aspx?m={}'
 
 data = {
-    'Sel_XNXQ':'20171',
+    'Sel_XNXQ':'20170',
     'rad':'0',
     'px':'0',
     'txt_yzm':' ',
@@ -20,7 +20,7 @@ headers = {
    'Accept-Encoding': 'gzip, deflate',
    'Accept-Language': 'zh-CN,zh;q=0.9',
    'Connection': 'keep-alive',
-   'Cookie': 'pgv_pvi=4405037056; ASP.NET_SessionId=232fo0rapamghxvjn05ndkjt',
+   'Cookie': 'pgv_pvi=4405037056; Hm_lvt_5ac69348bbb80bea6b78615e417d1b85=1522916198,1523020385; Hm_lvt_c5afacc19deac67fc5e1a64e53dab977=1522916198,1523020385; ASP.NET_SessionId=0isxgrvfjj2f31favozolxr4',
    'Host': 'newjw.neusoft.edu.cn',
    'Referer': 'http://newjw.neusoft.edu.cn/jwweb/xscj/Stu_MyScore_rpt.aspx',
    # 'Referer' : 'http://newjw.neusoft.edu.cn/jwweb/znpk/Pri_StuSel_rpt.aspx?m=2DcAIUvuFiSZMi1',
@@ -37,13 +37,12 @@ def pk():
     return rs,cc_str # m,o
 def base_req():
     s = requests.session()
-    m,o = pk()
-    sssel = ssel.format(m)
-    data['hidsjyzm'] = o
-    s.post(sssel,headers=headers,data=data)
-    headers['Referer'] = 'http://newjw.neusoft.edu.cn/jwweb/znpk/Pri_StuSel_rpt.aspx?m={}'.format(m)
-    info = s.get(sel,headers=headers)
-    print (info.text)
+    # m,o = pk()
+    # sssel = ssel.format(m)
+    # data['hidsjyzm'] = o
+    # s.post(sssel,headers=headers,data=data)
+    # headers['Referer'] = 'http://newjw.neusoft.edu.cn/jwweb/znpk/Pri_StuSel_rpt.aspx?m={}'.format(m)
+    info = s.get(url2,headers=headers)
     with open('demo.jpg','wb') as f:
         f.write(info.content)
 

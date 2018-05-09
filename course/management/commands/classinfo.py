@@ -239,3 +239,10 @@ roominfo = {
     '114210':'教学楼A12-210',
     '115101':'SOVO'
     }
+def main():
+    for i in roominfo:
+        yield i
+if __name__ == '__main__':
+    for i in main():
+        print (i)
+    
