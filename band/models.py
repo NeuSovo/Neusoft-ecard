@@ -19,14 +19,19 @@ class BandOrder(models.Model):
         (0, '快递'),
         (1, '商品/餐饮')
     )
-
-    ## 订单状态只能从上递减至0，严格层级控制
+    
+    ## 
+    # 订单状态只能从上递减至0，严格层级控制
     #  当且仅当状态为3时才可跳至-1
-    # -1 状态发起者 发起User
-    #  0 状态发起者 发起User
-    #  1 状态发起者 领取User
-    #  2 状态发起者 领取User
-    #  3 状态发起者 发起User
+    #  3 -> 2 -> 1 -> 0
+    #  ↓
+    # -1
+    # =========================
+    # -1 状态发起者 create_user
+    #  0 状态发起者 create_user
+    #  1 状态发起者 receive_user
+    #  2 状态发起者 receive_user
+    #  3 状态发起者 create_user
     # 
     order_status_choices = (
         (OSC.Cancel, '已取消'),

@@ -18,4 +18,3 @@ class OrderStatusConfig:
             return enum[int(code)+1]
         except IndexError:
             return 'undefined'
-        
