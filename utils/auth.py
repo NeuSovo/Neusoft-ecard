@@ -51,10 +51,11 @@ def usercheck():
 
             user = User.objects.get(open_id=str(open_id))
 
-            # app.info("[{}][{}][{}]".format(
-            #     func.__name__, user.open_id, action))
+            body.pop('base_req')
+            request_backup.info("[{fun_name}][{action}][{user}][{body}]".format(
+                                fun_name=func.__name__,action=request.path,
+                                user=str(user),body=body))
 
-            request_backup.info(str(body))
             return func(*args, **kwargs, user=user, body=body)
 
         return inner_wrapper

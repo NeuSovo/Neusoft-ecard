@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ['*']
 # Logging
 
 ADMINS = (
-    ('Admins','1510180157@qq.com'),
+    ('Admins','@qq.com'),
 )
  
 #
@@ -59,6 +59,9 @@ LOGGING = {
         },
         'simple':{
             'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+        },
+        'backup':{
+            'format': "%(asctime)s %(message)s'"
         }
     },
     'filters': {
@@ -77,7 +80,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': BASE_DIR + '/logs/backup.log',
-            'formatter': 'simple'
+            'formatter': 'backup'
         },
         'request_info':{
             'level':'INFO',
