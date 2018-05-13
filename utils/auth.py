@@ -137,10 +137,6 @@ class LoginManager(object):
         user = self.user
         user.last_login = datetime.now()
         user_info = UserManager.get_user_info(user)
-
-        if not settings.DEBUG:
-            user_info['qrcode'] = 'https://wash.wakefulness.cn/tools/qrcode/' + \
-                                  user_info['qrcode']
         user.save()
 
         return {'code': ASEC.LOGIN_SUCCESS,
@@ -169,6 +165,19 @@ class UserManager(object):
             result['is_bind'] = 0
 
         return result
+
+    @staticmethod
+    def set_user_profile(user, profile):
+        """
+        :param user:
+        :param profile:
+        :return:
+        """
+        user.nick_name = profile.get('name','Nothing')
+        user.avatar_links = profile.get('url','https://pic3.zhimg.com/aadd7b895_s.jpg')
+        user.save()
+
+        return user
 
     @staticmethod
     def get_user_key(user):

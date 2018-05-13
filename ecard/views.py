@@ -1,6 +1,5 @@
 import json
-from django.http import JsonResponse
-from django.shortcuts import HttpResponse
+from django.http import JsonResponse, HttpResponse
 from ecard.handle import EcardManager
 from utils.auth import usercheck
 # Create your views here.

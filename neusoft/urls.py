@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from ecard.views import card_view
-from utils.views import login_view,register_view
+from utils.views import login_view,register_view, profile_view
 from course.views import room_view
 from band.views import bindorder_view
 urlpatterns = [
@@ -25,6 +25,7 @@ urlpatterns = [
     path('auth/reg', register_view),
     path('auth/login', login_view),
 
+    path('user/profile/<str:action>', profile_view),
     path('user/card/<str:action>', card_view),
 
     path('user/course/<str:action>', room_view),# er: empty_room

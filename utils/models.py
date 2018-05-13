@@ -21,6 +21,14 @@ class User(models.Model):
     last_login = models.DateTimeField(
         default=timezone.now
         )
+    nick_name = models.CharField(
+        max_length=100,
+        default='Nothing'
+    )
+    avatar_links = models.CharField(
+        max_length=150,
+        default='https://pic3.zhimg.com/aadd7b895_s.jpg'
+    )
 
     class Meta:
         ordering = ['-last_login']

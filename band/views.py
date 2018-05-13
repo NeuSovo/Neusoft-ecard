@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from band.handle import BandOrderHandle
 
 from utils.auth import usercheck

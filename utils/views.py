@@ -1,5 +1,5 @@
 import json
-from utils.auth import WechatSdk, LoginManager, usercheck
+from utils.auth import UserManager, WechatSdk, LoginManager, usercheck
 from django.shortcuts import render
 from django.http import JsonResponse
 
@@ -12,6 +12,16 @@ def parse_info(data):
     :return dict data to json,and return HttpResponse
     """
     return JsonResponse(data)
+
+
+@usercheck()
+def profile_view(request, user, action =None, body=None):
+    result = {'message': 'failed'}
+    if action == 'set':
+        UserManager().set_user_profile(user,body)
+        result = {'message': 'ok'}
+
+    return parse_info(result)
 
 
 def register_view(request):
