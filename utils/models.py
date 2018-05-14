@@ -37,7 +37,7 @@ class User(models.Model):
         return u'%s' % (self.open_id)
 
     @property
-    def nick_name(self):
+    def name(self):
         return self.nick_name
 
     @property

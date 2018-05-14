@@ -91,7 +91,7 @@ class BandOrder(models.Model):
         return {'order_id': str(self.order_id),
                 'order_type': self.order_type,
                 'order_status': self.order_status,
-                'create_user': str(self.create_user.nick_name),
+                'create_user': str(self.create_user.name),
                 'avatar_links': str(self.create_user.link),
                 'create_time': str(self.create_time),
                 'order_price': str(self.order_price),
