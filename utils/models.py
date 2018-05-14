@@ -36,3 +36,10 @@ class User(models.Model):
     def __str__(self):
         return u'%s' % (self.open_id)
 
+    @property
+    def nick_name(self):
+        return self.nick_name
+
+    @property
+    def link(self):
+        return self.avatar_links
