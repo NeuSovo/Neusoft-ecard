@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class RoomModel(models.Model):
 
     class Meta:
@@ -41,7 +42,7 @@ class RoomModel(models.Model):
         max_length=100,
     )
     RoomCount = models.IntegerField(
-        default = 0
+        default=0
     )
 
 
@@ -66,29 +67,29 @@ class RoomTest(models.Model):
         return result
 
     ClassTimeTime_choices = (
-        ( '1','1-2节'),
-        ( '2','3-4节'),
-        ( '3','5-6节'),
-        ( '4','7-8节'),
-        ( '5','9-10节'),
-        ( '5','9-11节'),
-        ( '1-2','1-4节'),
-        ( '1-2-3-4','1-8节'),
-        ( '3-4','5-7节'),
-        ( '3-4','5-8节'),
-        ( '1-2-3-4','1-8节'),
-        ( '1-2-3-4-5','1-10节' ),
-        ( '1-2-3-4-5','1-11节'),
+        ('1', '1-2节'),
+        ('2', '3-4节'),
+        ('3', '5-6节'),
+        ('4', '7-8节'),
+        ('5', '9-10节'),
+        ('5', '9-11节'),
+        ('1-2', '1-4节'),
+        ('1-2-3-4', '1-8节'),
+        ('3-4', '5-7节'),
+        ('3-4', '5-8节'),
+        ('1-2-3-4', '1-8节'),
+        ('1-2-3-4-5', '1-10节'),
+        ('1-2-3-4-5', '1-11节'),
     )
 
     ClassTimeWeek_choices = (
-        (1,'周一'),
-        (2,'周二'),
-        (3,'周三'),
-        (4,'周四'),
-        (5,'周五'),
-        (6,'周六'),
-        (7,'周日'),
+        (1, '周一'),
+        (2, '周二'),
+        (3, '周三'),
+        (4, '周四'),
+        (5, '周五'),
+        (6, '周六'),
+        (7, '周日'),
     )
 
     RoomID = models.CharField(
@@ -119,7 +120,8 @@ class RoomTest(models.Model):
         null=True
     )
 
-    ClassTimeWeek = models.IntegerField(default=0,choices=ClassTimeWeek_choices)
+    ClassTimeWeek = models.IntegerField(
+        default=0, choices=ClassTimeWeek_choices)
 
     ClassTimeTime = models.CharField(
         default='0',

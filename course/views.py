@@ -7,6 +7,7 @@ from utils.auth import usercheck
 from course.handle import ClassRoom
 # Create your views here.
 
+
 def parse_info(data):
     """
     parser_info:
@@ -17,7 +18,7 @@ def parse_info(data):
 
 
 @usercheck()
-def room_view(request, user=None ,action=None, body=None):
+def room_view(request, user=None, action=None, body=None):
     response = ''
     room = ClassRoom(body=body)
 
@@ -31,4 +32,3 @@ def room_view(request, user=None ,action=None, body=None):
 
     response = parse_info(result())
     return response
-

@@ -4,6 +4,7 @@ from band.handle import BandOrderHandle
 from utils.auth import usercheck
 # Create your views here.
 
+
 @usercheck()
 def bindorder_view(request, action=None, body=None, user=None):
     response = ''

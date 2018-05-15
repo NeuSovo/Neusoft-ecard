@@ -2,6 +2,7 @@ from django.contrib import admin
 from course.models import RoomTest
 # Register your models here.
 
+
 class FloorFilter(admin.SimpleListFilter):
     title = u'楼宇'
     parameter_name = 'floor'
@@ -16,8 +17,8 @@ class FloorFilter(admin.SimpleListFilter):
             ('A7', u'A7'),
             ('健美操教室', u'健美操教室'),
             ('体育馆', u'体育馆'),
-            ('三期运动场',u'三期运动场'),
-            ('三期网球场',u'三期网球场')
+            ('三期运动场', u'三期运动场'),
+            ('三期网球场', u'三期网球场')
         )
 
     def queryset(self, request, queryset):
@@ -36,7 +37,8 @@ class RoomAdmin(admin.ModelAdmin):
     '''
         Admin View for Room
     '''
-    list_display = ('RoomID','ClassName', 'ClassTeacher', 'ClassWeek', 'ClassTimeWeek', 'ClassTimeTime')
+    list_display = ('RoomID', 'ClassName', 'ClassTeacher',
+                    'ClassWeek', 'ClassTimeWeek', 'ClassTimeTime')
     list_filter = (FloorFilter, 'ClassTimeWeek', 'ClassTimeTime',)
     # inlines = [
     #     Inline,
@@ -44,5 +46,6 @@ class RoomAdmin(admin.ModelAdmin):
     # raw_id_fields = ('',)
     # readonly_fields = ('',)
     search_fields = ('ClassTeacher', 'ClassName', 'ClassGrade')
+
 
 admin.site.register(RoomTest, RoomAdmin)
