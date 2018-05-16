@@ -2,10 +2,7 @@ import os
 import re
 from bs4 import BeautifulSoup as bf
 from django.core.management.base import BaseCommand, CommandError
-
-DEBUG = True
-if not DEBUG:
-    from course.models import RoomTest
+from course.models import RoomTest
 all_time = {
     '1-2节]': '1',
     '3-4节]': '2',
@@ -148,12 +145,12 @@ def main(get_tmp=False):
             yield deal(i,get_tmp=get_tmp)
 
 
-def sync_course_to_db(get_tmp=False):
+def sync_course_to_db(get_tmp=False,debug=True):
     for j in main(get_tmp):
         allclass = []
         try:
             for i in j:
-                if not DEBUG:
+                if not debug:
                     allclass.append(RoomTest(RoomID=i['RoomId'],
                                              ClassName=i['ClassName'],
                                              ClassTeacher=i['ClassTeacher'],
@@ -163,10 +160,10 @@ def sync_course_to_db(get_tmp=False):
                                              ClassTimeWeek=int(i['ClassTimeWeek']),
                                              ClassTimeTime=i['ClassTimeTime']))
                 print (i)
-        except:
+        except Exception as e:
             continue
 
-        if not DEBUG:
+        if not debug:
             RoomTest.objects.bulk_create(allclass)
 
 
@@ -174,8 +171,9 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('-t', type=int,help="1=get tmp_info", default=0)
+        parser.add_argument('-d', type=int,help="1=get tmp_info", default=0)
 
     def handle(self, *args, **options):
         get_tmp = True if options['t'] else False
-        print (get_tmp)
-        sync_course_to_db(get_tmp)
+        debug = False if options['d'] else True
+        sync_course_to_db(get_tmp,debug)
