@@ -1,5 +1,6 @@
 __pycache__
 env_neu
 migrations
+*.log
 /*.json
 /tmp.py
