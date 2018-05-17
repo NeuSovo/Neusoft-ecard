@@ -170,8 +170,8 @@ def sync_course_to_db(get_tmp=False,debug=True):
 class Command(BaseCommand):
 
     def add_arguments(self, parser):
-        parser.add_argument('-t', type=int,help="1=get tmp_info", default=0)
-        parser.add_argument('-d', type=int,help="1=get tmp_info", default=0)
+        parser.add_argument('-t', type=int,help="get tmp_info [0, 1]", default=0)
+        parser.add_argument('-d', type=int,help="debug [0, 1]", default=0)
 
     def handle(self, *args, **options):
         get_tmp = True if options['t'] else False
