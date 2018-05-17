@@ -1,5 +1,6 @@
 __pycache__
 env_neu
+*.sqlite3
 migrations
 *.log
 /*.json
