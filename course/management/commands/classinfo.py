@@ -242,7 +242,3 @@ roominfo = {
 def main():
     for i in roominfo:
         yield i
-if __name__ == '__main__':
-    for i in main():
-        print (i)
-    
