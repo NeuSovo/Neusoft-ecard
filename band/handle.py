@@ -18,7 +18,7 @@ class BandOrderHandle:
         new_band = BandOrder(order_id=self.order_id,
                              create_user=self.issue_user,
                              order_type=self.body.get('order_type', 0),
-                             order_address=self.body.get('address', '无'),
+                             order_address=self.body.get('order_address', '无'),
                              order_name=self.body.get('order_name', '无'),
                              order_phone=self.body.get('order_phone', '0'),
                              order_price=self.body.get('order_price', 0),
