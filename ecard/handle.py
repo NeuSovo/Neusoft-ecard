@@ -221,4 +221,5 @@ class Proxy:
         pass
 
     def get(self):
-        return requests.get(self.proxy_url + 'get/').content
+        proxy = requests.get(self.proxy_url + 'get/').content
+        return proxy.decode('utf-8')
