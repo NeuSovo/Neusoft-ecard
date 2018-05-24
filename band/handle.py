@@ -3,13 +3,14 @@ import logging
 from band.models import BandOrder
 from band.exceptions import UpdateStatusError
 from band.apps import OrderStatusConfig as OSC
-
+from datetime import timedelta, datetime
 app = logging.getLogger('app.custom')
 
 
 class BandOrderHandle:
     def __init__(self, body, issue_user):
         self.order_id = body.get('order_id', None)
+        self.band_o = BandOrder().get_order(self.order_id)
         self.issue_user = issue_user
         self.body = body
 
@@ -27,51 +28,69 @@ class BandOrderHandle:
 
         new_band.save()
         return {'message': 'ok',
-                'order_id': self.order_id}
+                'order_id': self.order_id,
+                'expire_time': self.extend_band(band_order=new_band)}
+
+    def extend_band(self, EXPIRETIME=2, band_order=None):
+        """
+        expire_time_hours default = 2
+        based on datetimenow+timedelta(expire_time_hours)
+        """
+        if band_order:
+            band_order.expire_time = datetime.now() + timedelta(hours=EXPIRETIME)
+            band_order.save()
+            return band_order.expire_time
+        else:
+            if int(self.band_o.expire_time - datetime.now()) < timedelta(minutes=30):
+                self.band_o.expire_time = datetime.now() + timedelta(hours=EXPIRETIME)
+
+        self.band_o.save()
+        return {'message': 'ok',
+                'expire_time': self.band_o.expire_time}
 
     def receive_band(self):
-        band_o = BandOrder().get_order(self.order_id)
-        if not band_o:
+        self.band_o = BandOrder().get_order(self.order_id)
+        if not self.band_o:
             return {'message': 'order_id Error'}
 
         try:
-            band_o.update_order_status(OSC.Received, self.issue_user)
+            self.band_o.update_order_status(OSC.Received, self.issue_user)
         except UpdateStatusError as e:
             app.warn(str(e))
             return {'message': str(e)}
-        return {'message': 'ok', 'receive_time': band_o.receive_time}
+        return {'message': 'ok', 'receive_time': self.band_o.receive_time}
 
     def confirm_band(self):
-        band_o = BandOrder().get_order(self.order_id)
-        if not band_o:
+        self.band_o = BandOrder().get_order(self.order_id)
+        if not self.band_o:
             return {'message': 'order_id Error'}
 
         try:
-            band_o.update_order_status(OSC.ToConfirm, self.issue_user)
+            self.band_o.update_order_status(OSC.ToConfirm, self.issue_user)
         except UpdateStatusError as e:
             app.warn(str(e))
             return {'message': str(e)}
         return {'message': 'ok'}
 
     def done_band(self):
-        band_o = BandOrder().get_order(self.order_id)
-        if not band_o:
+        self.band_o = BandOrder().get_order(self.order_id)
+        if not self.band_o:
             return {'message': 'order_id Error'}
 
         try:
-            band_o.update_order_status(OSC.Done, self.issue_user)
+            self.band_o.update_order_status(OSC.Done, self.issue_user)
         except UpdateStatusError as e:
             app.warn(str(e))
             return {'message': str(e)}
-        return {'message': 'ok', 'receive_time': band_o.done_time}
+        return {'message': 'ok', 'receive_time': self.band_o.done_time}
 
     def cancel_band(self):
-        band_o = BandOrder().get_order(self.order_id)
-        if not band_o:
+        self.band_o = BandOrder().get_order(self.order_id)
+        if not self.band_o:
             return {'message': 'order_id Error'}
 
         try:
-            info = band_o.update_order_status(OSC.Cancel, self.issue_user)
+            info = self.band_o.update_order_status(OSC.Cancel, self.issue_user)
         except UpdateStatusError as e:
             app.warn(str(e))
             return {'message': str(e)}

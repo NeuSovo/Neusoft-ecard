@@ -83,7 +83,7 @@ def get_random_string(length=12,
     """
     Return a securely generated random string.
 
-    The default length of 12 with the a-z, A-Z, 0-9 character set returns
+    The default length of 12 with the a-z, A-Z, 0-9 , _/+, character set returns
     a 71-bit value. log_2((26+26+10)^12) =~ 71 bits
     """
     if not using_sysrandom:

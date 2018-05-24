@@ -159,6 +159,11 @@ class BandOrder(models.Model):
         blank=True
     )
 
+    expire_time = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
     done_time = models.DateTimeField(
         null=True,
         blank=True
@@ -191,6 +196,6 @@ class BandOrder(models.Model):
     def get_order(order_id):
         try:
             order = BandOrder.objects.get(order_id=order_id)
-        except Models.DoesNotExist:
+        except:
             order = None
         return order
