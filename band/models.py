@@ -103,7 +103,7 @@ class BandOrder(models.Model):
                 'order_tip': self.order_tip,
                 'order_address': self.order_address,
                 'expire_time': self.expire_time,
-                'expire_time_timestamp': time.mktime(self.create_time.timetuple())
+                'expire_time_timestamp': time.mktime(self.expire_time.timetuple()) if isinstance(self.expire_time, datetime) else 0
                 }
 
     def complete_info(self):

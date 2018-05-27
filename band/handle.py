@@ -8,11 +8,11 @@ app = logging.getLogger('app.custom')
 
 
 class BandOrderHandle:
-    def __init__(self, body, issue_user):
+    def __init__(self, body=None, issue_user=None):
+        self.body = body
         self.order_id = body.get('order_id', None)
         self.band_o = BandOrder().get_order(self.order_id)
         self.issue_user = issue_user
-        self.body = body
 
     def new_band(self):
         self.order_id = BandOrder().gen_orderid()
@@ -25,7 +25,7 @@ class BandOrderHandle:
                              order_price=self.body.get('order_price', 0),
                              order_tip=self.body.get('order_tip', 0),
                              content=self.body.get('content', ''))
-
+        self.band_o = new_band
         new_band.save()
         return {'message': 'ok',
                 'order_id': self.order_id,
@@ -130,8 +130,12 @@ class BandOrderHandle:
     def ar_band(self):
         info = []
         bindex = int(self.body.get('bindex', 0))
-        band_pool = BandOrder.objects.filter(order_status=OSC.UnReceive, expire_time__lte=datetime.now())[
-            bindex:bindex + 20]
+        exp = int(self.body.get('exp', 1))
+        if exp:
+            band_pool = BandOrder.objects.filter(order_status=OSC.UnReceive, expire_time__gte=datetime.now())[
+                bindex:bindex + 20]
+        else:
+            band_pool = BandOrder.objects.filter(order_status=OSC.UnReceive,)[bindex:bindex + 20]
         for order in band_pool.iterator():
             info.append(order.simple_info())
 

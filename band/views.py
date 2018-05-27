@@ -20,3 +20,13 @@ def bindorder_view(request, action=None, body=None, user=None):
 
     response = JsonResponse(result())
     return response
+
+
+def get_order_status(request):
+    body = {}
+    body['bindex'] = request.GET.get('bindex', 0)
+    body['exp'] = request.GET.get('exp', 1)
+    band = BandOrderHandle(body=body)
+    res = band.ar_band()
+
+    return JsonResponse(res)
