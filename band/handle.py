@@ -19,30 +19,32 @@ class BandOrderHandle:
         new_band = BandOrder(order_id=self.order_id,
                              create_user=self.issue_user,
                              order_type=self.body.get('order_type', 0),
-                             order_address=self.body.get('order_address', '无'),
-                             order_name=self.body.get('order_name', '无'),
+                             order_address=self.body.get('order_address', ''),
+                             order_name=self.body.get('order_name', ''),
                              order_phone=self.body.get('order_phone', '0'),
                              order_price=self.body.get('order_price', 0),
                              order_tip=self.body.get('order_tip', 0),
-                             content=self.body.get('content', '无'))
+                             content=self.body.get('content', ''))
 
         new_band.save()
         return {'message': 'ok',
                 'order_id': self.order_id,
-                'expire_time': self.extend_band(band_order=new_band)}
+                'expire_time': self.extend_band()}
 
-    def extend_band(self, EXPIRETIME=2, band_order=None):
+    def extend_band(self, exprie_hours=2, max_extend_minutes=30):
         """
         expire_time_hours default = 2
         based on datetimenow+timedelta(expire_time_hours)
         """
-        if band_order:
-            band_order.expire_time = datetime.now() + timedelta(hours=EXPIRETIME)
-            band_order.save()
-            return band_order.expire_time
+        if self.band_o:
+            self.band_o.expire_time = datetime.now() + timedelta(hours=exprie_hours)
+            self.band_o.save()
+            return self.band_o.expire_time
         else:
-            if int(self.band_o.expire_time - datetime.now()) < timedelta(minutes=30):
-                self.band_o.expire_time = datetime.now() + timedelta(hours=EXPIRETIME)
+            if int(self.band_o.expire_time - datetime.now()) < timedelta(minutes=max_extend_minutes):
+                self.band_o.expire_time = datetime.now() + timedelta(hours=exprie_hours)
+            else:
+                return {'message': '还没到最低续期时间，再等等吧'}
 
         self.band_o.save()
         return {'message': 'ok',
@@ -51,7 +53,7 @@ class BandOrderHandle:
     def receive_band(self):
         self.band_o = BandOrder().get_order(self.order_id)
         if not self.band_o:
-            return {'message': 'order_id Error'}
+            return {'message': '订单号错误'}
 
         try:
             self.band_o.update_order_status(OSC.Received, self.issue_user)
@@ -63,7 +65,7 @@ class BandOrderHandle:
     def confirm_band(self):
         self.band_o = BandOrder().get_order(self.order_id)
         if not self.band_o:
-            return {'message': 'order_id Error'}
+            return {'message': '订单号错误'}
 
         try:
             self.band_o.update_order_status(OSC.ToConfirm, self.issue_user)
@@ -75,7 +77,7 @@ class BandOrderHandle:
     def done_band(self):
         self.band_o = BandOrder().get_order(self.order_id)
         if not self.band_o:
-            return {'message': 'order_id Error'}
+            return {'message': '订单号错误'}
 
         try:
             self.band_o.update_order_status(OSC.Done, self.issue_user)
@@ -87,7 +89,7 @@ class BandOrderHandle:
     def cancel_band(self):
         self.band_o = BandOrder().get_order(self.order_id)
         if not self.band_o:
-            return {'message': 'order_id Error'}
+            return {'message': '订单号错误'}
 
         try:
             info = self.band_o.update_order_status(OSC.Cancel, self.issue_user)
@@ -128,7 +130,7 @@ class BandOrderHandle:
     def ar_band(self):
         info = []
         bindex = int(self.body.get('bindex', 0))
-        band_pool = BandOrder.objects.filter(order_status=OSC.UnReceive)[
+        band_pool = BandOrder.objects.filter(order_status=OSC.UnReceive, expire_time__lte=datetime.now())[
             bindex:bindex + 20]
         for order in band_pool.iterator():
             info.append(order.simple_info())

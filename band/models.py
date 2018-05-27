@@ -1,3 +1,4 @@
+import time
 import random
 from datetime import datetime, timedelta
 from django.db import models
@@ -101,6 +102,8 @@ class BandOrder(models.Model):
                 'order_price': str(self.order_price),
                 'order_tip': self.order_tip,
                 'order_address': self.order_address,
+                'expire_time': self.expire_time,
+                'expire_time_timestamp': time.mktime(self.create_time.timetuple())
                 }
 
     def complete_info(self):
@@ -136,14 +139,17 @@ class BandOrder(models.Model):
 
     order_address = models.CharField(
         max_length=155,
+        null=True
     )
 
     order_name = models.CharField(
         max_length=30,
+        null=True
     )
 
     order_phone = models.CharField(
         max_length=12,
+        null=True
     )
 
     receive_user = models.ForeignKey(
@@ -171,6 +177,7 @@ class BandOrder(models.Model):
 
     order_price = models.DecimalField(
         max_digits=5,
+        null=True,
         decimal_places=2
     )
 
