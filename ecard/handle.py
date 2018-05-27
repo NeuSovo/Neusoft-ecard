@@ -82,11 +82,12 @@ class EcardManager(object):
         return {'message': 'ok', 'info': UserManager.get_user_info(self.user)}
 
     def balance_card(self):
+        if self.user.is_bind == 0:
+            return {'message': '请先绑定饭卡'}
+
         self.key = UserManager.get_user_key(self.user)
         client = self.get_client(self.key)
 
-        if self.user.is_bind == 0:
-            return {'message': 'failed'}
 
         redis_key = 'balance_' + self.key
         # Redis
@@ -117,11 +118,11 @@ class EcardManager(object):
         return result
 
     def detail_card(self):
+        if self.user.is_bind == 0:
+            return {'message': '请先绑定饭卡'}
         self.key = UserManager.get_user_key(self.user)
         client = self.get_client(self.key)
         month = self.data.get('month', 0)
-        if self.user.is_bind == 0:
-            return {'message': 'failed'}
 
         redis_key = 'detail_' + str(month) + '_' + self.key
         # Redis
