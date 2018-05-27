@@ -113,7 +113,7 @@ class EcardManager(object):
             app.warn(str(e))
             info = {}
         # Redis
-        if not info:
+        if info:
             redis_global.set(redis_key, result, ex=600)
         return result
 
@@ -160,7 +160,8 @@ class EcardManager(object):
         result = {'message': 'ok',
                   'info': info}
         # Redis
-        redis_global.set(redis_key, result, ex=600)
+        if info:
+            redis_global.set(redis_key, result, ex=600)
         return result
 
     def proxy_get(self, url="https://www.baidu.com"):
