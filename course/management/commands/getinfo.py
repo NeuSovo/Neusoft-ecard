@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+import os
 import requests
 from bs4 import BeautifulSoup as bf
-from classinfo import roominfo
+from .classinfo import roominfo
+from django.core.management.base import BaseCommand, CommandError
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
@@ -40,9 +42,10 @@ def getinfo(c, classkey):
             pass
 
     all = soup.select('table')
-    with open('result.txt', 'a+', encoding='utf-8') as f:
-        f.write(str(all[1:]) + '\n')
-
+    path = os.path.join(os.getcwd(),'course', 'management','commands','result.txt')
+    with open(path, 'a+', encoding='utf-8') as f:
+        if all[1:]:
+            f.write(str(all[1:]) + '\n')
 
 
 def get_class_code():
@@ -60,8 +63,9 @@ def get_class_code():
 
 def main():
     code = s.get('http://newjw.neusoft.edu.cn/jwweb/sys/ValidateCode.aspx',headers=headers)
+    cap = os.path.join(os.getcwd(),'course', 'management','commands','cap.jpg')
 
-    with open('cap.jpg', 'wb') as file:
+    with open(cap, 'wb') as file:
         file.write(code.content)
     c = input()
 
@@ -72,7 +76,7 @@ def main():
             if str(e) == "1":
                 try:
                     code = s.get('http://newjw.neusoft.edu.cn/jwweb/sys/ValidateCode.aspx',headers=headers)
-                    with open('cap.jpg', 'wb') as file:
+                    with open(cap, 'wb') as file:
                         file.write(code.content)
                     c = input()
                     getinfo(c,key)
@@ -82,4 +86,7 @@ def main():
                 continue
 
 
-get_class_code()
+class Command(BaseCommand):
+
+    def handle(self, *args, **options):
+        main()
