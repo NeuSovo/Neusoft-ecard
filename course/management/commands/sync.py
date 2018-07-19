@@ -1,8 +1,13 @@
 import os
 import re
+import requests
 from bs4 import BeautifulSoup as bf
 from django.core.management.base import BaseCommand, CommandError
 from course.models import RoomTest
+from classinfo import roominfo
+from aip import AipOcr
+from tenacity import retry, retry_if_exception_type
+
 all_time = {
     '1-2节]': '1',
     '3-4节]': '2',
@@ -30,7 +35,6 @@ all_time = {
     '1-8节]单':'1-2-3-4',
     '1-8节]双':'1-2-3-4',
     '9-10节]双': '5',
-    '9节]': '5',
     '9-10节]单': '5',
     '9-11节]单': '5',
     '9-11节]双': '5',
@@ -50,7 +54,7 @@ all_week = {
     '六':6,
     '日':7,
 }
-def  deal_tmp_info(info, RoomId=None, normal=True) -> dict:
+def deal_tmp_info(info, RoomId=None, normal=True) -> dict:
     result = []
     for i in info.select('tr')[1:]:
         all_table = i.find_all('td')
@@ -168,13 +172,90 @@ def sync_course_to_db(get_tmp=False,debug=True):
             RoomTest.objects.bulk_create(allclass)
 
 
+
+APP_ID = '11517608'
+API_KEY = 'qGCmlacGw3YS6GA6bcN2AUa9'
+SECRET_KEY = 'k8urPaXfjxaNqaW4rD6WTlhoAGXmMHw0'
+client = AipOcr(APP_ID, API_KEY, SECRET_KEY)
+
+class VaildCodeError(Exception):
+    pass
+
+
+class Crawer:
+    """docstring for Crawer"""
+    def __init__(self, xnxq = '20172', debug = True):
+        self.headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+            'Cookie': 'ASP.NET_SessionId=x1vexibsducg1taqamzeed3d',
+            'Host': 'newjw.neusoft.edu.cn',
+            'Origin': 'http://newjw.neusoft.edu.cn',
+            'Referer': 'http://newjw.neusoft.edu.cn/jwweb/ZNPK/KBFB_RoomSel.aspx',
+        }
+        self.data = {
+            'Sel_XNXQ': xnxq,
+            'rad_gs': '2',
+            'Sel_XQ': '1',
+
+            # to change
+            'txt_yzm': 'yzm',
+            'Sel_JXL': 'classkey',
+            'Sel_ROOM': 'classkey',
+        }
+        self.client = requests.Session()
+
+        self.yzm_url = 'http://newjw.neusoft.edu.cn/jwweb/sys/ValidateCode.aspx'
+        self.class_url = 'http://newjw.neusoft.edu.cn/jwweb/ZNPK/KBFB_RoomSel_rpt.aspx'
+        self.debug = debug
+    
+    def update_yzm(self):
+        yzm = self.client.get(self.yzm_url, headers=self.headers)
+        res = client.basicAccurate(yzm.content)
+        yzm = res['words_result'][0]['words'].replace(' ','') if res['words_result_num'] else ''
+        self.yzm = yzm
+        if self.debug:
+            print (res)
+        return yzm
+
+    def write_data(self, data):
+        if data[1:]:
+            with open('result.txt', 'a+', encoding='utf-8') as f:
+                f.write(str(data[1:]) + '\n')
+
+    @retry(retry=retry_if_exception_type(VaildCodeError))
+    def crawer_signle_class(self, classkey):
+        self.data['txt_yzm'] = self.yzm
+        self.data['Sel_JXL']= classkey[:3]
+        self.data['Sel_ROOM'] = classkey
+
+        detail = self.client.post(self.class_url, headers=self.headers, data=self.data)
+        soup = bf(detail.text, 'lxml')
+        if "alert('验证码错误！');" in detail.text:
+            self.update_yzm()
+            raise VaildCodeError()
+
+        soup = soup.select('table')
+        self.write_data(soup)
+
+    def start(self):
+        self.update_yzm()
+        for i in roominfo:
+            self.crawer_signle_class(i)
+
+
+
 class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('-t', type=int,help="get tmp_info [0, 1]", default=0)
         parser.add_argument('-d', type=int,help="debug [0, 1]", default=0)
+        parser.add_argument('-c', type=str,help="crawer xnnq [20172, 20180]", default='20172')
 
     def handle(self, *args, **options):
         get_tmp = True if options['t'] else False
         debug = False if options['d'] else True
-        sync_course_to_db(get_tmp,debug)
+        if options['c']:
+            a = Crawer(xnnq=options['c'], debug=debug)
+            a.start()
+        else:
+            sync_course_to_db(get_tmp,debug)
