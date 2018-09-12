@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup as bf
 from django.core.management.base import BaseCommand, CommandError
 from course.models import RoomTest
-from classinfo import roominfo
+from .classinfo import roominfo
 from aip import AipOcr
 from tenacity import retry, retry_if_exception_type
 
@@ -144,7 +144,7 @@ def deal(info, get_tmp=False) -> dict:
     return result
 
 def main(get_tmp=False):
-    path = os.path.join(os.getcwd(),'course', 'management','commands','result.txt')
+    path = os.path.join(os.getcwd(), 'result.txt')
     with open(path, 'r',encoding='utf-8') as f:
         for i in f.readlines():
             yield deal(i,get_tmp=get_tmp)
@@ -249,13 +249,13 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('-t', type=int,help="get tmp_info [0, 1]", default=0)
         parser.add_argument('-d', type=int,help="debug [0, 1]", default=0)
-        parser.add_argument('-c', type=str,help="crawer xnnq [20172, 20180]", default='20172')
+        parser.add_argument('-c', type=str,help="crawer xnnq [20172, 20180]")
 
     def handle(self, *args, **options):
         get_tmp = True if options['t'] else False
         debug = False if options['d'] else True
         if options['c']:
-            a = Crawer(xnnq=options['c'], debug=debug)
+            a = Crawer(xnxq=options['c'], debug=debug)
             a.start()
         else:
             sync_course_to_db(get_tmp,debug)

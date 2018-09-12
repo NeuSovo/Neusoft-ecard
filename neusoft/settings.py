@@ -23,14 +23,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ojn@!#rv#sxxt=031r987y7p)gxy^lc-#o%9(^9e+teif)a*l+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True 
 
 ALLOWED_HOSTS = ['*']
 
 # Logging
 
 ADMINS = (
-    ('Admins','@qq.com'),
+    ('Admins','1510180157@qq.com'),
 )
  
 #
@@ -41,8 +41,8 @@ MANAGERS = ADMINS
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST= 'smtp.exmail.qq.com'
 EMAIL_PORT= 465        
-EMAIL_HOST_USER = ''  
-EMAIL_HOST_PASSWORD = 'Z' 
+EMAIL_HOST_USER = 'i@zxh326.cn'  
+EMAIL_HOST_PASSWORD = 'Zxh326//' 
 EMAIL_SUBJECT_PREFIX = 'website' 
 EMAIL_USE_SSL = True 
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = EMAIL_HOST_USER 
@@ -174,7 +174,7 @@ WSGI_APPLICATION = 'neusoft.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Neusoft',
+        'NAME': 'neusoft',
         'USER': 'neusoft',
         'PASSWORD': '123456',
         'HOST': '127.0.0.1',

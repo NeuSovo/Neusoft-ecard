@@ -43,7 +43,7 @@ class ClassRoom(object):
 
         all_room = command(self.floor)
         for i in all_class.iterator():
-            if (handle_date(i.ClassWeek, now_week[1]-9)):
+            if (handle_date(i.ClassWeek, now_week[1]-36)):
                 for tt in i.ClassTimeTime.split('-'):
                     all_room[i.RoomID][int(tt)-1] = False
         info = []
